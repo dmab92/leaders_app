@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report
+    id="resultats_concours_xls"
+    model="leaders.concour.blanc.line"
+    string="Resultats du concours blanc"
+    report_type="xlsx"
+    name="leaders_app.report_results_xls"
+    file="leaders_app.report_results_xls"
+
+
+/>
+
+
+</odoo>

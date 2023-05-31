@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+ 
+ <record model="ir.ui.view" id="view_presencepersonnel_form">
+        <field name="name">Presence du personnel</field>
+        <field name="model">leaders.presence.personnel</field>
+        <field name="arch" type="xml">
+            <form string="Presence du personel">
+                <sheet>
+                     <group string="Informations sur la presence du personnel">
+                         <field name="name"/>
+                         <field name="center_id"/>
+                         <field name="date"/>
+                         <field name="year_id"/>
+                     </group>
+
+                        <notebook colspan="1">
+                            <page string="Presences personnel">
+                                <field name="ligne_presence_ids">
+                                    <tree string="Presences personnel" editable="top">
+                                        <field name="employee_id"/>
+                                        <field name="job_id"/>
+                                        <field name="arriving_time" widget='float_time'/>
+                                        <field name="departure_time" widget='float_time'/>
+                                        <field name="time_dif"/>
+                                        <field name="signature" widget="signature"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                </sheet>
+            </form>
+        </field>
+ </record>
+
+
+   <record model="ir.ui.view" id="view_presencepersonnel_tree">
+            <field name="name">Liste des presences du personnel</field>
+            <field name="model">leaders.presence.personnel</field>
+            <field name="arch" type="xml">
+                <tree string="Liste des presences du personnel" >
+                       <field name="name"/>
+                         <field name="center_id"/>
+                         <field name="date"/>
+                         <field name="year_id"/>
+                </tree>
+            </field>
+    </record>
+
+    <record id="presencepersonnel_action" model="ir.actions.act_window">
+            <field name="name">Liste de presences du personnel</field>
+            <field name="res_model">leaders.presence.personnel</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+          <field name="view_id" ref="view_presencepersonnel_tree"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                 Cr&#233;ez / &#233;ditez vos donn&#233;es sur la Presence du Personnel
+              </p><p>
+                Cette interface vous permet d'enregistrer les informations la Presence du Personnel
+              </p>
+            </field>
+    </record>
+</odoo>

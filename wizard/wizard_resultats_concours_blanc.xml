@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+<!--    Form view resultats Concours Blanc-->
+    <record id="view_resultats_concours_wizard_form" model="ir.ui.view">
+        <field name="name">concour.blanc.wizard.form</field>
+        <field name="model">concour.blanc.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Resultats Concours Blancs">
+                <group>
+                    <group>
+
+
+                        <field name="concour_id"  required="1" />
+                        <field name="number" required="1" />
+                    </group>
+                    <group>
+                        <field name="year_id" />
+                        <field name="center_ids"  widget="many2many_tags" invisible="1"/>
+                        <field name='file_data' filename="file_name" attrs="{'invisible' : [('bool', '=', False)]}"/>
+                        <field name='bool' invisible="1" />
+                    </group>
+                </group>
+
+                <footer>
+                    <button
+                        name="print_report"
+                        string="Imprimer le fichier Excel des resultats"
+                        icon="fa-print"
+                        type="object"
+                        class="oe_highlight"
+                    />
+                    <button
+                        string="Annuler"
+                        icon="fa-close"
+                        special="cancel"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--Action for print concours results wizard -->
+
+    <record id="view_result_concours_wizard_action" model="ir.actions.act_window">
+        <field name="name">Resultats du Concours Blancs</field>
+        <field name="res_model">concour.blanc.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_resultats_concours_wizard_form"/>
+        <field name="target">new</field>
+    </record>
+
+<!--    <record id="test_model_wizard_view_form" model="ir.ui.view">-->
+
+<!--	        <field name="name">test.model.wizard.form</field>-->
+
+<!--	        <field name="model">test.model.wizard</field>-->
+
+<!--	        <field name="arch" type="xml">-->
+<!--                <header >-->
+<!--                    <button name="create_wizard" string="Create Wizard" class="oe_highlight" type="object"/>-->
+<!--                </header>-->
+
+<!--            <form string="Test">-->
+<!--                <group class="oe_title">-->
+<!--                <field name="test_field"/>-->
+<!--                </group>-->
+<!--            </form>-->
+
+<!--            </field>-->
+
+<!--    </record>-->
+
+<!--    <record id="test_model_wizard_action" model="ir.actions.act_window">-->
+
+<!--        <field name="name">Test Model Wizard</field>-->
+
+<!--        <field name="type">ir.actions.act_window</field>-->
+
+<!--        <field name="res_model">test.model.wizard</field>-->
+
+<!--        <field name="view_mode">form</field>-->
+
+<!--        <field name="view_id" ref="test_model_wizard_view_form"/>-->
+
+<!--        <field name="target">new</field>-->
+
+<!--</record>-->
+
+
+</odoo>

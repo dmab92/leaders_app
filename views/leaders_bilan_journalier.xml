@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+       <!---!!!BILAN JOURNALIER !! -->
+        <record model="ir.ui.view" id="view_bilan_journalier_tree">
+            <field name="name">BILAN JOURNALIER</field>
+            <field name="model">leaders.bilan.journalier</field>
+            <field name="arch" type="xml">
+                <tree string="Bilan Journalier">
+                    <field name="name"/>
+                    <field name="date" />
+                    <field name="center_id" />
+                    <field name="region" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_bilan_journalier_form">
+            <field name="name">BILAN JOURNALIER</field>
+            <field name="model">leaders.bilan.journalier</field>
+            <field name="arch" type="xml">
+                <form string="BILAN JOURNALIER">
+                        <p class="oe_grey">
+                                    Cr&#233;ez / &#233;ditez vos donn&#233;es sur les  Bilans Journaliers
+                        </p>
+                    <header>
+                         <button name="set_to_validated"
+                                      string="Validé"
+                                      type="object"
+                                      class="oe_highlight"
+                                      icon="fa-check-circle"
+                              />
+                        <field name="state" widget="statusbar" statusbar_visible="draft,valited,cancel" />
+                    </header>
+                    <sheet>
+
+                    <div class="oe_inline">
+                        <div class="oe_title">
+                             <group>
+                                 <group>
+
+                                     <field name="name"/>
+                                      <field name="center_id" />
+
+                                 </group>
+                                <group>
+                                     <field name="region" />
+                                    <field name="year_id"/>
+
+                                </group>
+                                 <group>
+                                    <field name="date"/>
+
+                                </group>
+                             </group>
+                        </div>
+                    </div>
+                        <notebook>
+                            <page string="SECTION A: ENSEIGNEMENT">
+
+                                    <field name="enseignement_ids"  >
+                                    <tree nolabel="1" editable="top">
+                                        <field name="date"/>
+                                        <field name="center_id"/>
+                                        <field name="salle"/>
+                                        <field name="name" />
+                                        <field name="matier_id" />
+                                        <field name="time_start" widget="float_time"/>
+                                        <field name="time_end"   widget="float_time" />
+                                        <field name="time_dif" />
+                                        <field name="contenu" />
+                                        <field name="observation"/>
+                                        <field name="blouse" />
+                                        <field name="signature_cf" widget="signature"/>
+                                    </tree>
+                                </field>
+
+                            </page>
+
+                            <page string="SECTION B: FINANCES/ENTREES">
+<!--                                 <button name="loard_data"-->
+<!--                                         string="Charger les montants"-->
+<!--                                         type="object"-->
+<!--                                         class="oe_highlight"-->
+<!--                                         icon="fa-check-circle"-->
+<!--                                 />-->
+
+                                <group>
+                                    <group>
+                                        <field name="total_frais_cour" />
+                                        <field name="total_livre" />
+                                        <field name="total_dossier" />
+                                    </group>
+                                </group>
+
+                            </page>
+
+                            <page string="SECTION B: FINANCES/SORTIES">
+
+                                    <field name="sortie_ids" nolabel="1"  >
+                                        <tree string="SORTIES"  editable="top">
+                                            <field name="date_register"/>
+                                            <field name="center_id"/>
+                                            <field name="motif" />
+                                            <field name="amount" sum="Montant Total des Sorties"/>
+                                            <field name="employee_id"  require="True"/>
+                                        </tree>
+                                    </field>
+                                <group>
+                                     <field name="total_sorti" />
+                                    <field name="solde"/>
+                                    <field name="solde_in_letter"/>
+
+                                </group>
+
+
+                            </page>
+
+                            <page string="FINANCES/RECAPITULATIF GENERAL">
+                                    <group>
+                                        <field name="amount_verse"/>
+                                        <field name="photo"/>
+                                    </group>
+                                    <group>
+                                        <field name="employee_momo_id" require="1"/>
+                                        <field name="amount_momo" require="1"/>
+                                        <field name="amount_phy" require="1"/>
+                                        <field name="employee_phy_id" require="1"/>
+                                        <field name="amount_dossier" require="1"/>
+                                    </group>
+
+                                    <group>
+                                        <field name="signature_ac"  widget="signature"/>
+                                        <field name="signature_cf" widget="signature"/>
+                                        <field name="bool"/>
+                                    </group>
+                            </page>
+
+
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_bilan_journalier_action" model="ir.actions.act_window">
+            <field name="name">Les Bilans Journaliers</field>
+            <field name="res_model">leaders.bilan.journalier</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="view_id" ref="view_bilan_journalier_tree"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                 Cr&#233;ez / &#233;ditez vos donn&#233;es sur les Bilans Journaliers
+              </p><p>
+                  Cette interface vous permet d'enregistrer les Bilans Journaliers
+                </p>
+            </field>
+        </record>
+
+
+
+
+    <!---!! HISTORIQUE DES COURS !!-->
+
+        <record model="ir.ui.view" id="view_enseig_history_form">
+            <field name="name"> Recapitualitif  des enseignements</field>
+            <field name="model">leaders.enseignement</field>
+            <field name="arch" type="xml">
+                <form string="Les Enseignements">
+                        <p class="oe_grey">
+                                    Cr&#233;ez / &#233;ditez vos donn&#233;es sur les Historiques des Enseignements
+                        </p>
+                    <header>
+
+                    </header>
+                    <sheet>
+
+                    <div class="oe_inline">
+                        <div class="oe_title">
+                             <group>
+                                 <group>
+                                    <field name="date"/>
+                                        <field name="salle"/>
+                                        <field name="name" />
+                                        <field name="matier_id"  readonly="1"/>
+                                        <field name="time_start" widget="float_time" readonly="1"/>
+                                        <field name="time_end"   widget="float_time" readonly="1"/>
+                                    </group>
+                                    <group>
+                                               <field name="time_dif"  readonly="1"/>
+                                                <field name="contenu"  />
+                                                <field name="observation"/>
+                                                <field name="blouse" />
+                                                <field name="state"/>
+                                    </group>
+                             </group>
+                        </div>
+                    </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_enseig_history_tree">
+                <field name="name">BILAN DES ENSEIGNEMENTS</field>
+                <field name="model">leaders.enseignement</field>
+                <field name="arch" type="xml">
+                    <tree string="BILAN DES ENSEIGNEMENTS" create="false" delete="false">
+                        <field name="date"/>
+                        <field name="center_id"/>
+                        <field name="salle"/>
+                        <field name="name" />
+                        <field name="matier_id" />
+    <!--                    <field name="time_start" />-->
+    <!--                    <field name="time_end"    />-->
+                        <field name="time_dif" sum = "Nombre Total d'heure" />
+                        <field name="contenu" />
+                        <field name="observation"/>
+                        <field name="blouse" />
+    <!--                    <field name="signature_cf" widget="signature"/>-->
+                    </tree>
+                </field>
+        </record>
+
+    <record id="view_bilan_cours_action" model="ir.actions.act_window">
+            <field name="name">Les Bilans des Enseignements</field>
+            <field name="res_model">leaders.enseignement</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="view_id" ref="view_enseig_history_tree"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                 Cr&#233;ez / &#233;ditez vos donn&#233;es sur les BILANS DES ENSEIGNEMENTS
+              </p><p>
+                  Cette interface vous permet d'enregistrer les BILANS DES ENSEIGNEMENTS
+                </p>
+            </field>
+        </record>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     <!---!! HISTORIQUE DES SORTIES !!-->
+
+        <record model="ir.ui.view" id="view_sorti_history_form">
+            <field name="name"> Recapitualitif  des Sorties</field>
+            <field name="model">leaders.sortie</field>
+            <field name="arch" type="xml">
+                <form string="Les Enseignements">
+                        <p class="oe_grey">
+                                    Cr&#233;ez / &#233;ditez vos donn&#233;es sur les Historiques des Sorties
+                        </p>
+                    <header>
+
+                    </header>
+                    <sheet>
+
+                    <div class="oe_inline">
+                        <div class="oe_title">
+                             <group>
+                                 <group>
+                                     <field name="date_register" require="1"/>
+                                     <field name="center_id" require="1"/>
+                                     <field name="motif" require="1"/>
+                                 </group>
+                                 <group>
+                                        <field name="amount" require="1"/>
+                                        <field name="employee_id" require="1" />
+                                 </group>
+                             </group>
+                        </div>
+                    </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_sorti_history_tree">
+                <field name="name">BILAN DES SORTIES</field>
+                <field name="model">leaders.sortie</field>
+                <field name="arch" type="xml">
+                    <tree string="BILAN DES SORTIES">
+                        <field name="date_register"/>
+                        <field name="center_id"/>
+                        <field name="motif" />
+                        <field name="amount"  sum=" Total des Sorties"/>
+                        <field name="employee_id" />
+                    </tree>
+                </field>
+        </record>
+
+    <record id="view_sorti_history_action" model="ir.actions.act_window">
+            <field name="name">Les Bilans des SORTIES</field>
+            <field name="res_model">leaders.sortie</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="view_id" ref="view_sorti_history_tree"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                 Cr&#233;ez / &#233;ditez vos donn&#233;es sur les BILANS DES SORTIES
+              </p><p>
+                  Cette interface vous permet d'enregistrer les BILANS DES SORTIES
+                </p>
+            </field>
+        </record>
+
+
+
+
+</odoo>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="recu_paiement">
+          <t t-call="web.html_container">
+<!--            <t t-call="web.external_layout">-->
+                <t t-foreach="docs" t-as="o">
+<!--                     <img src='leaders_app,static/description/icon.png' class="float-right" style="max-height: 65px; margin-top:20px;"-->
+<!--                     alt="Logo"/>-->
+                <div class="page">
+<!--                     <img src='leaders_app,static/description/icon.png' class="float-right" style="max-height: 65px; margin-top:20px;"-->
+<!--                     alt="Logo"/>-->
+                    <!-- HEADER  PAGE!-->
+                    <center>
+
+<!--                        <img t-attf-src="'data:image/*;base64,{{leaders_app,static/description/icon.png}}'"/>-->
+
+<!--                        <img t-if="res_company.logo" t-att-src="'data:image/png;base64,%s' %res_company.logo"/>-->
+ <img t-if="o.user_id.company_id.logo" t-att-src="'data:image/png;base64,%s' %o.user_id.company_id.logo"/>
+
+<!--                        <img src='leaders_app,static/description/icon.png' class="float-right" style="max-height: 65px; margin-top:20px;"-->
+<!--                     alt="Logo"/>-->
+                    <small>
+                        <p align="center">
+                            <small>
+                            Centre National Bilingue d'Orientation et de Pr&#233;paration aux concours
+                            d'Entr&#233;e dans les grandes Ecoles de Facult&#233; Nationales et Internationales<br />
+                         <i>National Bilingual Center For Orientation and Preparation of Entrance
+                            Examinations Into Vocational School and Fatulties </i>
+                            </small>
+                        </p>
+
+                    </small>
+
+                        <h5> Re&#231;u de paiement   N° <span t-esc="o.payment_number"/>   <br/> <I> <small>Tuition Receipt</small></I> </h5>
+
+                    </center>
+                    <!--  BODY PAGE!-->
+                    <table class="table table-borderless" align="center">
+                        <tr>
+                            <td align="left">De M/Mlle <br/> <i> <small>From Mr/Mrs </small></i> </td>
+                            <td>:<span t-esc="o.apprenant_id.name"/> </td>
+                        </tr>
+                        <tr>
+                            <td align="left">Concours  <br/> <i> <small>Composition exam</small></i> </td>
+                            <td>:  <span t-esc="o.concour_id.name"/> </td>
+                        </tr>
+                        <tr>
+                            <td align="left">Centre de Pr&#233;pa choisi  <br/> <i> <small>Chosen preparatory center</small></i></td>
+                            <td>:  <span t-esc="o.center_id.name"/> </td>
+                        </tr>
+                        <tr>
+                            <td align="left">Etablissement <br/> <i> <small> School </small></i></td>
+                            <td>:<span t-esc="o.apprenant_id.etablissment_id.name"/> </td>
+                        </tr>
+<!--                        <tr>-->
+<!--                            <td align="left">Classe <br/> <i> <small>Class </small></i></td>-->
+<!--                           <td>:   <span t-esc="o.apprenant_id.class_id.name"/> </td>-->
+<!--                        </tr>-->
+                        <tr>
+                            <td align="left">T&#233;l Elève <br/> <i> <small> Student Phone</small></i></td>
+                            <td>:<span t-field="o.apprenant_id.phone_apprenant" /> </td>
+                        </tr>
+<!--                        <tr>-->
+<!--                            <td align="left">T&#233;l parents <br/> <i> <small>Parent Phone</small></i></td>-->
+<!--                            <td>:<span t-field="o.apprenant_id.phone_parents"/></td>-->
+<!--                        </tr>-->
+                        <tr>
+                            <td align="left"> <strong>Paiements (FCFA) <br/> <i> <small>Payments </small></i></strong> </td>
+                        </tr>
+                        <t t-set="total" t-value="0"/>
+                                <tr t-foreach="o.ligne_paiement_ids" t-as="line">
+<!--                                      <td align="left"><span t-esc="line.motif"/></td>-->
+                                    <td>
+                                        <span t-esc="
+                                             {'inscription': 'Inscription',
+                                            'frais_dossier': 'Frais de dossier',
+                                            'tranche1': 'Première Tranche',
+                                             'tranche2': 'Deuxième Tranche',
+                                              'tranche3':'Troisième Tranche',
+                                               'tome1': 'Livre tome 1',
+                                               'tome2': 'Livre tome 2',
+                                               'livre_activite': 'Livre activité',
+                                               }[line.motif]"/>
+                                    </td>
+                                      <td align="right"><span t-esc="line.amount_paid"/></td>
+                                      <t t-set="total" t-value="total+line.amount_paid"/>
+                                </tr>
+                         <tr>
+                             <td align="left"> <strong> Total : </strong></td>
+                             <td align="right"> <strong> <span t-esc="total"/> </strong></td>
+                        </tr>
+                         <tr>
+                             <strong>
+                                 <td align="left">Reste &#224; payer <br/> <i> <small>Rest</small></i></td>
+                                 <td align="right"><span t-field="o.remaining_amount"/></td>
+                             </strong>
+                        </tr>
+
+                        <tr>
+                            <td align="left">Fait à <br/> <i> <small>From Mr/Mrs </small></i></td>
+                            <td>  <span t-field="o.apprenant_id.center_id.city_id.name" />  </td>
+                        </tr>
+                        <tr>
+                            <td align="left">Le <br/> <i> <small>The </small></i></td>
+                            <td><span t-esc="o.date_register" t-options="{&quot;widget&quot;: &quot;date&quot;}"/></td>
+                        </tr>
+
+	</table>
+                    <!-- PIEDS DE PAGE!-->
+                    <center>
+                        <strong> <u>Contactez-nous</u> </strong>/ Contact us <br />
+                        Tel:<span t-esc="docs.user_id.company_id.phone"/> <br />
+                        Noms et Signature de l'administrateur D&#233;l&#233;gue <br />
+                        <span t-esc="o.user_id.name"/>
+                    </center>
+
+                </div>
+<!--                </t>-->
+            </t>
+        </t>
+    </template>
+
+    <record id="paperformat_recu_paiement" model="report.paperformat">
+        <field name="name">Recu</field>
+        <field name="default" eval="True" />
+        <field name="format">custom</field>
+<!--        <field name="page_height">200</field>-->
+        <field name="page_width">80</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False" />
+<!--        <field name="header_spacing">35</field>-->
+        <field name="dpi">90</field>
+    </record>
+
+     <record id="action_report_recu_paiement" model="ir.actions.report">
+       <field name="name">Recu paiement</field>
+       <field name="model">leaders.paiement</field>
+       <field name="report_type">qweb-pdf</field>
+       <field name="report_name">leaders_app.recu_paiement</field>
+       <field name="report_file">leaders_app.recu_paiement</field>
+<!--       <field name="binding_model_id" ref="account.model_account_move" />-->
+       <field name="paperformat_id" ref="leaders_app.paperformat_recu_paiement" />
+       <field name="binding_type">report</field>
+   </record>
+
+
+</odoo>
+
+

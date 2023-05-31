@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="view_leaders_employee_filter" model="ir.ui.view">
+            <field name="name">leaders.employee.filter</field>
+            <field name="model">leaders.employee</field>
+            <field name="arch" type="xml">
+                <search string="Les employés">
+                    <field name="type" />
+                    <field name="univ_id" />
+                    <group expand="0" string="Group By">
+                        <filter string="Universit&#233;" name="groupby_univ_id" domain="[]" context="{'group_by': 'univ_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_leaders_employee_tree">
+            <field name="name">Liste des employés</field>
+            <field name="model">leaders.employee</field>
+            <field name="arch" type="xml">
+                <tree string="Liste des Employés " >
+                    <field name="name" string="Noms et pr&#233;noms"/>
+                    <field name="center_id"  string="Centre de pr&#233;pas" />
+                    <field name="univ_id" />
+                    <field name="phone"/>
+                    <field name="type" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_leaders_employee_form">
+            <field name="name">Les centres de preparations</field>
+            <field name="model">leaders.employee</field>
+            <field name="arch" type="xml">
+                <form string="Les Employes">
+                        <p class="oe_grey">
+                                    Cr&#233;ez / &#233;ditez vos donn&#233;es sur les centres de preparation
+                        </p>
+                    <header>
+
+                    </header>
+                    <sheet>
+
+                    <div class="oe_inline">
+                        <div class="oe_title">
+                             <group>
+                                 <group>
+                                     <field name="name" string="Noms et Pr&#233;noms "/>
+                                     <field name="phone"   string="T&#233;l&#233;phone MOMO/OM" />
+                                     <field name="work_email"  string="Email"  />
+                                     <field name="univ_id"  string="Universit&#233; d'Origine"/>
+
+                            </group>
+                            <group>
+                                <field name="type" />
+                                <field name="job_id"   attrs="{ 'invisible': [('type','!=', 'perma')]}"/>
+                                <field name="center_id"    />
+                                <field name="matiere_ids" widget="many2many_tags"  attrs="{ 'invisible': [('type','!=', 'teacher')]}"/>
+                                <field name="company_id"  invisible="1" />
+                            </group>
+                             </group>
+                        </div>
+                    </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_leaders_employee_perma_action" model="ir.actions.act_window">
+            <field name="name">Les Employés Permanants</field>
+            <field name="res_model">leaders.employee</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="domain">[('type', '=', 'perma')]</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="view_id" ref="view_leaders_center_tree"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                 Cr&#233;ez / &#233;ditez vos donn&#233;es sur les Employés Permanants
+              </p><p>
+                Cette interface vous permet d'enregistrer les Employés
+              </p>
+            </field>
+        </record>
+
+         <record id="view_leaders_employee_temp_action" model="ir.actions.act_window">
+            <field name="name">Les Employés Temporaires</field>
+            <field name="res_model">leaders.employee</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="domain">[('type', '=', 'temp')]</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="view_id" ref="view_leaders_center_tree"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                 Cr&#233;ez / &#233;ditez vos donn&#233;es sur les Employés
+              </p><p>
+                Cette interface vous permet d'enregistrer les Employés
+              </p>
+            </field>
+        </record>
+
+     <record id="view_leaders_teacher_action" model="ir.actions.act_window">
+            <field name="name">Les Enseignants</field>
+            <field name="res_model">leaders.employee</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="domain">[('type', '=', 'teacher')]</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="view_id" ref="view_leaders_center_tree"/>
+            <field name="help" type="html">
+
+              <p class="o_view_nocontent_smiling_face">
+                 Cr&#233;ez / &#233;ditez vos donn&#233;es sur les Enseignants
+              </p><p>
+                Cette interface vous permet d'enregistrer les Enseignants
+              </p>
+            </field>
+        </record>
+
+
+    <record id="view_leaders_personnel_action" model="ir.actions.act_window">
+            <field name="name">Tout le Personnel</field>
+            <field name="res_model">leaders.employee</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="view_id" ref="view_leaders_employee_form"/>
+            <field name="help" type="html">
+
+              <p class="o_view_nocontent_smiling_face">
+                 Cr&#233;ez / &#233;ditez vos donn&#233;es sur le Personnel  de leaders Cooperation
+              </p><p>
+                Cette interface vous permet d'enregistrer le Personnel
+              </p>
+            </field>
+    </record>
+
+</odoo>

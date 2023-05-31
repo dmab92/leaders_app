@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+       <!---!!!CONCOURS !! -->
+
+        <record model="ir.ui.view" id="view_leaders_conf_sms_tree">
+            <field name="name">ENVOI DE SMS </field>
+            <field name="model">leaders.sms</field>
+            <field name="arch" type="xml">
+                <tree string="Envoi dde SMS" >
+
+                    <field name="name"/>
+                    <field name="sender_phone" />
+                    <field name="message"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_leaders_conf_sms_form">
+            <field name="name">Les SMS</field>
+            <field name="model">leaders.sms</field>
+            <field name="arch" type="xml">
+                <form string="Les SMS">
+                        <p class="oe_grey">
+                                    Cr&#233;ez / &#233;ditez vos donn&#233;es sur les  SMS
+                        </p>
+                    <header>
+
+                        <button name="action_send_sms"
+                                      string="Envoyer le SMS"
+                                      type="object"
+                                      class="oe_highlight"
+                                      icon="fa-check-circle"
+                              />
+
+                    <field name="state" widget="statusbar" statusbar_visible="draft,valited,cancel" />
+                    </header>
+                    <sheet>
+
+                    <div class="oe_inline">
+                        <div class="oe_title">
+                             <group>
+                                 <group>
+                                 <field name="name"/>
+                                <field name="sender_phone" />
+
+                            </group>
+                            <group>
+                                 <field name="message"/>
+                                <label for="contact_list_ids" string="Selectionner la liste de diffusion:" class="oe_edit_only"/>
+                                <div class="d-inline-flex flex-row align-items-center">
+                                    <field name="contact_list_ids" widget="many2many_tags" placeholder="Select mailing lists..." class="oe_inline mb-0" context="{'form_view_ref': 'mass_mailing.mailing_list_view_form_simplified'}" />
+                                            <button icon="fa-user-plus" type="object" class="btn btn-secondary py-0 px-1 ms-1" name="action_view_mailing_contacts" title="Add Mailing Contacts"/>
+                                </div>
+
+<!--                                <field name="contact_list_ids" widget="many2many_tags" />-->
+                            </group>
+                             </group>
+                        </div>
+                    </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_leaders_conf_sms_action" model="ir.actions.act_window">
+            <field name="name">Les Concours</field>
+            <field name="res_model">leaders.sms</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="view_id" ref="view_leaders_conf_sms_tree"/>
+            <field name="help" type="html">
+
+              <p class="o_view_nocontent_smiling_face">
+                 Cr&#233;ez / &#233;ditez vos donn&#233;es sur les SMS
+              </p><p>
+                Cette interface vous permet d'enregistrer les SMS
+              </p>
+            </field>
+        </record>
+
+</odoo>

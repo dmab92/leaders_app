@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_leaders_apprenant,leaders.apprenant,model_leaders_apprenant,leaders_app.coordo_aca_group,1,1,1,0
+access_leaders_sms,leaders.sms,model_leaders_sms,leaders_app.chef_center_group,1,1,1,0
+access_leaders_sms,leaders.sms,model_leaders_sms,leaders_app.chef_center_group,1,1,1,0
+access_leaders_transfert,leaders.transfert,model_leaders_transfert,leaders_app.chef_center_group,1,1,1,0
+access_leaders_ligne_presence,leaders.ligne.presence,model_leaders_ligne_presence,leaders_app.chef_center_group,1,1,1,0
+access_leaders_presence_personnel,leaders.presence.personnel,model_leaders_presence_personnel,leaders_app.chef_center_group,1,1,1,0
+

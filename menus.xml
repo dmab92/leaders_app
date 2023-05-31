@@ -1,0 +1,306 @@
+<odoo>
+    <data>
+         <!-- Top menu item -->
+
+    <menuitem name="PREPAS CONCOURS"
+              id="leaders_app.menu_root"
+              web_icon="leaders_app,static/description/icon.png"/>
+
+
+    <!-- LES APPRENANTS -->
+
+        <menuitem name="Les Apprenants"
+                  id="leaders_app.apprenants"
+                  parent="leaders_app.menu_root"
+                  sequence="1"
+              />
+
+        <menuitem name="Enregister un Apprenant"
+                  id="leaders_app.save_apprenants"
+                  parent="leaders_app.apprenants"
+                  action="leaders_app.view_leaders_apprenant_save_action"
+                  sequence="1"
+              />
+        <menuitem name="Les Apprenants de mon Centre"
+                  id="leaders_app.my_apprenants"
+                  parent="leaders_app.apprenants"
+                  action="leaders_app.view_leaders_apprenant_my_center_action"
+                  sequence="2"
+              />
+         <menuitem name="Les Apprenants de ma Region"
+                  id="leaders_app.my_apprenants_region"
+                  parent="leaders_app.apprenants"
+                  action="leaders_app.view_leaders_apprenant_my_center_action"
+                  sequence="3"
+              />
+
+        <menuitem name="Tous les Apprenants"
+                  id="leaders_app.all_apprenants"
+                  parent="leaders_app.apprenants"
+                  action="leaders_app.view_leaders_apprenant_action"
+                  sequence="4"
+              />
+        <menuitem name="Transferer un Apprenant"
+                  id="leaders_app.transfert"
+                  parent="leaders_app.apprenants"
+                  action="leaders_app.view_leaders_transfert_action"
+                  sequence="5"
+              />
+
+
+
+        <!-- GESTION DES CONCOURS BLANCS -->
+
+         <menuitem name="Gestion des Concours Blancs"
+                  id="leaders_app.concours_blancs"
+                  parent="leaders_app.menu_root"
+                  sequence="2"
+              />
+
+
+         <menuitem name="Enregistrer les notes d'un concours blanc"
+                  id="leaders_app.concours_blancs_note"
+                  parent="leaders_app.concours_blancs"
+                  action="leaders_app.view_leaders_concour_blanc_action"
+                  sequence="1"
+              />
+
+        <menuitem name="Editer les Résultats Nationaux"
+                  id="leaders_app.concours_blanc_results"
+                  parent="leaders_app.concours_blancs"
+                  action="leaders_app.view_result_concours_wizard_action"
+                  sequence="2"
+              />
+
+
+
+
+
+        <menuitem name="Opérations Financières"
+                  id="leaders_app.view_leaders_payment"
+                  parent="leaders_app.menu_root"
+                  sequence="3"
+              />
+
+                <menuitem name="Enregister un paiement"
+                          id="leaders_app.view_leaders_payment_save"
+                          parent="leaders_app.view_leaders_payment"
+                          action="leaders_app.view_leaders_payment_action"
+                          sequence="1"
+
+                      />
+                <menuitem name=" Fiche de Bilan Financier"
+                          id="leaders_app.view_bilan_journalier"
+                          parent="leaders_app.view_leaders_payment"
+                          action="leaders_app.view_bilan_journalier_action"
+                          sequence="2"/>
+
+                <menuitem name="ENTREES"
+                              id="leaders_app.view_leaders_payment_history"
+                              parent="leaders_app.view_leaders_payment"
+                              sequence="4"
+                          />
+
+                <menuitem name="Paiements des Inscriptions"
+                          id="leaders_app.view_inscrip_payment_history"
+                          parent="leaders_app.view_leaders_payment_history"
+                          action="leaders_app.view_history_inscrip__action"
+                          sequence="4"/>
+
+                <menuitem name="Paiements de la tranche 1"
+                          id="leaders_app.view_tranch1_payment_history"
+                          parent="leaders_app.view_leaders_payment_history"
+                          action="leaders_app.view_leaders_histo_tranch1_action"
+                          sequence="4"/>
+
+                <menuitem name="Paiements de la tranche 2"
+                          id="leaders_app.view_tranch2_payment_history"
+                          parent="leaders_app.view_leaders_payment_history"
+                          action="leaders_app.view_leaders_histo_tranch2_action"
+                          sequence="5"/>
+
+                <menuitem name="Paiements de la tranche 3"
+                      id="leaders_app.view_tranch3_payment_history"
+                      parent="leaders_app.view_leaders_payment_history"
+                      action="leaders_app.view_leaders_histo_tranch3_action"
+                      sequence="6"/>
+
+
+                <menuitem name=" Tous les paiements"
+                          id="leaders_app.view_all_payment_history"
+                          parent="leaders_app.view_leaders_payment_history"
+                          action="leaders_app.view_leaders_histo_payment_action"
+                          sequence="7"
+                      />
+
+
+                <menuitem     name="SORTIES"
+                              id="leaders_app.view_sortie_bi_history"
+                              parent="leaders_app.view_leaders_payment"
+                              sequence="8"
+                          />
+
+                <menuitem name="Bilan des Sorties"
+                          id="leaders_app.sorti_history"
+                          parent="leaders_app.view_sortie_bi_history"
+                          action="leaders_app.view_sorti_history_action"
+                          sequence="9"
+                />
+
+
+ <!-- GESTION DES OPERATIONS LOGISTIQUES -->
+
+        <menuitem name="Opérations Logistiques"
+                  id="leaders_app.op_logistik"
+                  parent="leaders_app.menu_root"
+                  sequence="4"
+              />
+
+            <menuitem name="Paiements Frais de dossier"
+                          id="leaders_app.view_dossier_payment_history"
+                          parent="leaders_app.op_logistik"
+                          action="leaders_app.view_history_dossier_action"
+                      />
+
+                <menuitem name="Paiements Tome 1"
+                          id="leaders_app.view_tom1_payment_history"
+                          parent="leaders_app.op_logistik"
+                          action="leaders_app.view_tom1_payment_history_action"
+                      />
+                <menuitem name="Paiements Tome 2"
+                          id="leaders_app.view_tom2_payment_history"
+                          parent="leaders_app.op_logistik"
+                          action="leaders_app.view_tom2_payment_history_action"
+                      />
+
+                <menuitem name="Paiements Livret d'activité"
+                          id="leaders_app.view_livret_payment_history"
+                          parent="leaders_app.op_logistik"
+                          action="leaders_app.view_histo_livret_action"
+                      />
+
+
+         <!-- GESTION DE L'ACADEMIE  -->
+        <menuitem name="Académie"
+                      id="leaders_app.academie"
+                      parent="leaders_app.menu_root"
+                      action="leaders_app.view_bilan_cours_action"
+                      sequence="5"
+            />
+
+        <menuitem name="Bilan des Cours des Enseignants"
+                      id="leaders_app.bilan_cours"
+                      parent="leaders_app.academie"
+                      action="leaders_app.view_bilan_cours_action"
+                      sequence="1"
+                  />
+
+ <!-- GESTION DU PERSONNEL -->
+
+        <menuitem name="Gestion du personnel"
+                  id="leaders_app.personnel"
+                  parent="leaders_app.menu_root"
+                  sequence="6"
+              />
+
+        <menuitem name="Enregistrer un personnel"
+              id="leaders_app.save_personnel"
+              parent="leaders_app.personnel"
+              action="leaders_app.view_leaders_personnel_action"/>
+
+        <menuitem name="Fiche de Presence"
+              id="leaders_app.presence_perso"
+              parent="leaders_app.personnel"
+              action="leaders_app.presencepersonnel_action"/>
+
+        <menuitem name="Enseigants"
+              id="leaders_app.employe_ensei"
+              parent="leaders_app.personnel"
+              action="leaders_app.view_leaders_teacher_action"/>
+
+        <menuitem name="Employés Permanants"
+              id="leaders_app.employee_perma"
+              parent="leaders_app.personnel"
+              action="leaders_app.view_leaders_employee_perma_action"/>
+
+          <menuitem name="Employés Temporaires"
+              id="leaders_app.employee_tempo"
+              parent="leaders_app.personnel"
+              action="leaders_app.view_leaders_employee_temp_action"/>
+
+
+
+   <!-- CONFIGURATIONS -->
+         <menuitem name="Configurations"
+              id="leaders_app.config"
+                   sequence="9"
+              parent="leaders_app.menu_root" />
+
+        <menuitem name="Centres de Prépas"
+              id="leaders_app.center"
+              parent="leaders_app.config"
+              action="leaders_app.view_leaders_center_action"
+        sequence="1"/>
+
+
+
+        <menuitem name="Concours"
+                  id="leaders_app.concours"
+                  parent="leaders_app.config"
+                  action="leaders_app.view_leaders_concour_config_action"
+                  sequence="2"/>
+
+        <menuitem name="Anneés Académiques"
+              id="leaders_app.year"
+              parent="leaders_app.config"
+              action="leaders_app.view_leaders_year_action"
+              sequence="3"/>
+
+        <menuitem name="Matières"
+              id="leaders_app.matier"
+              parent="leaders_app.config"
+              action="leaders_app.view_leaders_matier_action"
+        sequence="4"/>
+        <menuitem name="Lignes de cocncours"
+                  id="leaders_app.concours_blanc_results_ligne"
+                  parent="leaders_app.config"
+                  action="leaders_app.view_leaders_concour_blanc_line_action"
+                  sequence="5"
+
+              />
+
+        <menuitem name="Les Etablissements"
+                  id="leaders_app.leaders_school"
+                  parent="leaders_app.config"
+                  action="leaders_app.view_leaders_school_action"
+                  sequence="6"
+
+              />
+
+
+
+
+        <menuitem name="SMS Marketing"
+                  id="leaders_app.leaders_sms"
+                  parent="leaders_app.config"
+                  action="leaders_app.view_leaders_conf_sms_action"
+
+              />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </data>
+</odoo>

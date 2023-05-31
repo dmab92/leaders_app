@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<data noupdate="1">
+    <record id="base.default_user" model="res.users">
+    </record>
+
+
+
+
+
+
+    <record model="ir.module.category" id="module_leader_category">
+             <field name="name">LEADERS</field>
+             <field name="description"> Acces des utilissateurs au module  de Leaders</field>
+             <field name="sequence">20</field>
+    </record>
+
+
+    <record id="coordo_gene_group" model="res.groups">
+            <field name="name">Coordo Générale</field>
+            <field name="category_id" ref="module_leader_category"/>
+    </record>
+
+    <record id="coordo_regio_group" model="res.groups">
+            <field name="name">Coordo Régionale</field>
+            <field name="category_id" ref="module_leader_category"/>
+    </record>
+
+    <record id="controler_group" model="res.groups">
+            <field name="name">Controleurs</field>
+            <field name="category_id" ref="module_leader_category"/>
+    </record>
+
+
+    <record id="chef_center_group" model="res.groups">
+            <field name="name">Chef de centre</field>
+            <field name="category_id" ref="module_leader_category"/>
+    </record>
+
+    <record id="agent_comptable_group" model="res.groups">
+            <field name="name">Agent Comptable</field>
+            <field name="category_id" ref="module_leader_category"/>
+    </record>
+
+    <record id="coordo_logistik_group" model="res.groups">
+            <field name="name">Coordination Logistique</field>
+            <field name="category_id" ref="module_leader_category"/>
+    </record>
+
+
+     <record id="animateur_pedago_group" model="res.groups">
+            <field name="name">Animateur Pedagogique</field>
+            <field name="category_id" ref="module_leader_category"/>
+    </record>
+
+
+    <record id="coordo_aca_group" model="res.groups">
+            <field name="name">Coordination Academique</field>
+            <field name="category_id" ref="module_leader_category"/>
+    </record>
+
+
+
+</data>
+</odoo>

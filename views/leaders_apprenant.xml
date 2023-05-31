@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="view_leaders_apprenant_filter" model="ir.ui.view">
+            <field name="name">leaders.apprenant.filter</field>
+            <field name="model">leaders.apprenant</field>
+            <field name="arch" type="xml">
+                <search string="Les Apprenants">
+                    <field name="name"/>
+                    <field name="matricule"/>
+                    <field name="etablissment_id" />
+                    <field name="concours_ids"/>
+                    <field name="center_id" />
+                    <group expand="0" string="Group By">
+                        <filter string="Noms Apprenants" name="groupby_name" domain="[]" context="{'group_by': 'name'}"/>
+                        <filter string="Matricule" name="groupby_matricule" domain="[]" context="{'group_by': 'matricule'}"/>
+                         <filter string="Etablissement Frequenté" name="groupby_etablissment_id" domain="[]" context="{'group_by': 'etablissment_id'}"/>
+                        <filter string="Concours" name="groupby_concours_ids" domain="[]" context="{'group_by': 'concours_ids'}"/>
+                        <filter string="Centre de prépas" name="groupby_center_id" domain="[]" context="{'group_by': 'center_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_leaders_apprenant_tree">
+            <field name="name">Liste des Apprenants</field>
+            <field name="model">leaders.apprenant</field>
+            <field name="arch" type="xml">
+                <tree string="Liste des Apprenants" >
+                    <field name="matricule"/>
+                    <field name="name"/>
+                    <field name="center_id" />
+                    <field name="etablissment_id" />
+                    <field name="class_id" />
+<!--                    <field name="year_id"/>-->
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_leaders_apprenant_from">
+            <field name="name">Apprenants</field>
+            <field name="model">leaders.apprenant</field>
+            <field name="arch" type="xml">
+                <form string="Apprenants">
+                        <p class="oe_grey">
+                                    Cr&#233;ez / &#233;ditez vos donn&#233;es sur les apprenants
+                        </p>
+                    <header>
+
+                    </header>
+                    <sheet>
+
+                    <div class="oe_inline">
+                        <newline />
+                        <separator string="FICHE D’ENGAGEMENT ET D’INSCRIPTION" style="font-size: min(4vw, 2.6rem);"/>
+                        <br />
+                        <field name="photo" widget="image" class="oe_avatar oe_right" style="max-width:100px;max-height:117px;"/>
+                       <div class="oe_title">
+                                <field name="matricule" readonly="1"  style="font-size: min(3vw, 2.1rem);"/>
+                            <h1 class="d-flex flex-row">
+                                <field name="name" placeholder="Noms et prénoms de  l'apprenant" required="True" style="font-size: min(4vw, 2.6rem);"/>
+                            </h1>
+                        </div>
+
+                        <div class="oe_title">
+                          <separator string="Informations Personelles" />
+                             <group>
+                                 <group>
+<!--                                <field name="matricule" readonly="1"/>-->
+                                <field name="date_register" readonly="1"/>
+                                 <field name="etablissment_id" required="1"/>
+                                 <field name="serie_terminal" />
+
+                                 <field name="is_student" />
+                                <field name="univ_id" attrs="{'invisible': [('is_student','=', False)]}"/>
+                                 <field name="filiere_id" attrs="{'invisible': [('is_student','=', False)]}"/>
+                                     <field name="class_id"   required="1" />
+
+                                <field name="whatsap_phone"   required="1"/>
+                                     <field name="phone_apprenant"  />
+                                 <field name="quarter_live"/>
+                                <field name="concours_ids" widget="many2many_tags"   required="1"/>
+
+                            </group>
+                            <group>
+                                <field name="father_work_id"   />
+                                <field name="mother_work_id" />
+                                <field name="parent_town_id"  required="1" />
+                                <field name="center_id"  required="1"/>
+                                <field name="phone_parents" />
+                                <field name="year_id" readonly="1"/>
+
+
+                            </group>
+                             </group>
+
+                        </div>
+                    </div>
+                        <notebook>
+                            <page string="Informations Globales">
+                                <group>
+                                    <separator string="Pourquoi a tu choisis Leader’s Corporation ? " />
+                                    <group>
+                                        <field name="q1"  required="1" />
+                                        <field name="q2"  required="1"/>
+                                        <field name="q3"  required="1" />
+                                        <field name="q4"  required="1"/>
+                                        <field name="q5"  />
+                                    </group>
+                                    <group>
+                                        <field name="q6"   required="1"/>
+                                        <field name="q7"  required="1"/>
+                                        <field name="q8"  required="1"/>
+                                        <field name="q9"  required="1"/>
+                                        <field name="q10"   />
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Services supplémentaires sollicités à la structure LEADER’S CORPORATION">
+                                <group>
+                                    <field name="dossier"  required="1"/>
+                                    <field name="voyage"  required="1"/>
+                                </group>
+
+                            </page>
+
+                            <page string="ENGAGEMENTS PERSONNELS">
+
+                                <p>1) Je m’engage à être en salle de cours à 7h45 chaque matin et à y rester jusqu’à la fin des cours.</p>
+                                <p>  2- Je m’engage à traiter mes fiches de TD chaque jour avant le prochain cours </p>
+                                <p>3- Je m’engage à fournir tous les efforts nécessaires pour réussir au concours pour lequel je suis à Leader’s corporation </p>
+                                <p>4-Je m’engage à garder le silence pendant les cours</p>
+                                <p>5- Je m’engage à lire mes cours avant d’arriver au centre</p>
+                                <p>6- Je m’engage à faire des recherches personnelles pour optimiser mon rendement afin de parfaire ma préparation.  </p>
+                                <p> <field name="digital_signature" widget="signature"  string="Signature de L'élève"  required="1"/> </p>
+                            </page>
+                        </notebook>
+
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_leaders_apprenant_action" model="ir.actions.act_window">
+            <field name="name"> Tous les apprennants</field>
+            <field name="res_model">leaders.apprenant</field>
+            <field name="type">ir.actions.act_window</field>
+<!--            <field name="domain">[('state', '=', 'student')]</field>-->
+            <field name="view_mode">tree,form,graph</field>
+            <field name="view_id" ref="view_leaders_apprenant_tree"/>
+            <field name="help" type="html">
+
+              <p class="o_view_nocontent_smiling_face">
+                 Cr&#233;ez / &#233;ditez vos donn&#233;es sur les apprenants
+              </p><p>
+                Cette interface vous permet d'enregistrer les informations des apprenants
+              </p>
+            </field>
+        </record>
+
+
+     <record id="view_leaders_apprenant_save_action" model="ir.actions.act_window">
+            <field name="name">Les apprennants</field>
+            <field name="res_model">leaders.apprenant</field>
+            <field name="type">ir.actions.act_window</field>
+<!--            <field name="domain">[('state', '=', 'student')]</field>-->
+            <field name="view_mode">tree,form,graph</field>
+            <field name="view_id" ref="view_leaders_apprenant_from"/>
+            <field name="help" type="html">
+
+              <p class="o_view_nocontent_smiling_face">
+                 Cr&#233;ez / &#233;ditez vos donn&#233;es sur les apprenants
+              </p><p>
+                Cette interface vous permet d'enregistrer les informations des apprenants
+              </p>
+            </field>
+        </record>
+
+
+
+
+    <record id="view_leaders_apprenant_my_center_action" model="ir.actions.act_window">
+            <field name="name">Les apprennants de mon centre</field>
+            <field name="res_model">leaders.apprenant</field>
+            <field name="type">ir.actions.act_window</field>
+<!--            <field name="domain">[('state', '=', 'student')]</field>-->
+            <field name="view_mode">tree,form,graph</field>
+            <field name="view_id" ref="view_leaders_apprenant_tree"/>
+            <field name="help" type="html">
+
+              <p class="o_view_nocontent_smiling_face">
+                 Cr&#233;ez / &#233;ditez vos donn&#233;es sur les apprenants de mon centre
+              </p><p>
+                Cette interface vous permet d'enregistrer les informations des apprenants
+              </p>
+            </field>
+        </record>
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <!--- LES CENTRES DE PREPARATIONS!-->
+
+
+
+        <record id="view_leaders_transfert_filter" model="ir.ui.view">
+            <field name="name">leaders.transfert.filter</field>
+            <field name="model">leaders.transfert</field>
+            <field name="arch" type="xml">
+                <search string="Les Transferts d'apprenant">
+                    <field name="old_center_id"/>
+                    <field name="new_center_id" />
+                     <field name="apprenant_id" />
+                    <group expand="0" string="Group By">
+                         <filter string="Ancien Centre" name="groupby_old_center_id" domain="[]" context="{'group_by': 'old_center_id'}"/>
+                        <filter string="Nouveau Centre" name="groupby_new_center_id" domain="[]" context="{'group_by': 'new_center_id'}"/>
+                        <filter string="Apprenant" name="groupby_apprenant_id" domain="[]" context="{'group_by': 'apprenant_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_leaders_transfert_tree">
+            <field name="name">Les  Tranferts Apprenants</field>
+            <field name="model">leaders.transfert</field>
+            <field name="arch" type="xml">
+                <tree string="Les Transferts d'apprenant" >
+
+                    <field name="apprenant_id" />
+                    <field name="old_center_id"/>
+                    <field name="new_center_id" />
+
+
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_leaders_transfert_form">
+            <field name="name">Les Tranferts Apprenants</field>
+            <field name="model">leaders.transfert</field>
+            <field name="arch" type="xml">
+                <form string="Les Tranferts Apprenants">
+                        <p class="oe_grey">
+                                    Cr&#233;ez / &#233;ditez vos donn&#233;es sur les Les Tranferts Apprenants
+                        </p>
+                    <header>
+                        <button name="set_to_validated"
+                                      string="Validé"
+                                      type="object"
+                                      class="oe_highlight"
+                                      icon="fa-check-circle"
+                              />
+                        <button name="set_to_draft"
+                                      string="Remettre en brouillon"
+                                      type="object"
+                                      icon="fa-check-circle"
+                              />
+                        <field name="state" widget="statusbar" statusbar_visible="draft,valited,cancel" />
+
+                    </header>
+                    <sheet>
+
+                    <div class="oe_inline">
+                        <div class="oe_title">
+                             <group>
+                                 <group>
+                                 <field name="apprenant_id" />
+                            </group>
+                            <group>
+                            <field name="old_center_id"/>
+                             <field name="new_center_id" />
+                            </group>
+                             </group>
+                        </div>
+                    </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+    <record id="view_leaders_transfert_action" model="ir.actions.act_window">
+            <field name="name">Les Transferts</field>
+            <field name="res_model">leaders.transfert</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="view_id" ref="view_leaders_transfert_tree"/>
+            <field name="help" type="html">
+
+              <p class="o_view_nocontent_smiling_face">
+                 Cr&#233;ez / &#233;ditez vos donn&#233;es sur les Transferts
+              </p><p>
+                Cette interface vous permet d'enregistrer les Transferts
+              </p>
+            </field>
+        </record>
+
+
+</odoo>
