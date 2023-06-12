@@ -5,17 +5,19 @@
             <field name="model">leaders.apprenant</field>
             <field name="arch" type="xml">
                 <search string="Les Apprenants">
-                    <field name="name"/>
-                    <field name="matricule"/>
                     <field name="etablissment_id" />
+                    <field name="matricule" />
                     <field name="concours_ids"/>
                     <field name="center_id" />
+                    <field name="region_school"/>
+                    <field name="statut"/>
                     <group expand="0" string="Group By">
-                        <filter string="Noms Apprenants" name="groupby_name" domain="[]" context="{'group_by': 'name'}"/>
-                        <filter string="Matricule" name="groupby_matricule" domain="[]" context="{'group_by': 'matricule'}"/>
-                         <filter string="Etablissement Frequenté" name="groupby_etablissment_id" domain="[]" context="{'group_by': 'etablissment_id'}"/>
+                        <filter string="Etablissement Frequenté" name="groupby_etablissment_id" domain="[]" context="{'group_by': 'etablissment_id'}"/>
+                        <filter string="matricule" name="groupby_matricule" domain="[]" context="{'group_by': 'matricule'}"/>
                         <filter string="Concours" name="groupby_concours_ids" domain="[]" context="{'group_by': 'concours_ids'}"/>
                         <filter string="Centre de prépas" name="groupby_center_id" domain="[]" context="{'group_by': 'center_id'}"/>
+                        <filter string="Region de l'Etablissement" name="groupby_region_school" domain="[]" context="{'group_by': 'region_school'}"/>
+                        <filter string="Langue d'Etudes" name="groupby_statut" domain="[]" context="{'group_by': 'statut'}"/>
                     </group>
                 </search>
             </field>
@@ -53,11 +55,12 @@
                         <newline />
                         <separator string="FICHE D’ENGAGEMENT ET D’INSCRIPTION" style="font-size: min(4vw, 2.6rem);"/>
                         <br />
-                        <field name="photo" widget="image" class="oe_avatar oe_right" style="max-width:100px;max-height:117px;"/>
+                        <field name="photo" required="1" widget="image" class="oe_avatar oe_right" style="max-width:100px;max-height:117px;"/>
                        <div class="oe_title">
                                 <field name="matricule" readonly="1"  style="font-size: min(3vw, 2.1rem);"/>
+<!--                           <field name="partner_id"/>-->
                             <h1 class="d-flex flex-row">
-                                <field name="name" placeholder="Noms et prénoms de  l'apprenant" required="True" style="font-size: min(4vw, 2.6rem);"/>
+                                <field name="name" placeholder="Noms et prénoms de  l'apprenant" required="1" style="font-size: min(4vw, 2.6rem);"/>
                             </h1>
                         </div>
 
@@ -66,16 +69,16 @@
                              <group>
                                  <group>
 <!--                                <field name="matricule" readonly="1"/>-->
-                                <field name="date_register" readonly="1"/>
-                                 <field name="etablissment_id" required="1"/>
-                                 <field name="serie_terminal" />
-
-                                 <field name="is_student" />
-                                <field name="univ_id" attrs="{'invisible': [('is_student','=', False)]}"/>
-                                 <field name="filiere_id" attrs="{'invisible': [('is_student','=', False)]}"/>
-                                     <field name="class_id"   required="1" />
-
-                                <field name="whatsap_phone"   required="1"/>
+                                     <field name="date_register" readonly="1"/>
+                                     <field name="statut" required="1"/>
+                                    <field name="etablissment_id" required="1"  options='{"no_open": True, "no_create": True}'/>
+                                     <field name="region_school"/>
+                                    <field name="serie_terminal" />
+                                     <field name="is_student" />
+                                     <field name="univ_id" attrs="{'invisible': [('is_student','=', False)]}"/>
+                                     <field name="filiere_id" attrs="{'invisible': [('is_student','=', False)]}"/>
+                                     <field name="class_id"   required="1"  />
+                                     <field name="whatsap_phone"   required="1"/>
                                      <field name="phone_apprenant"  />
                                  <field name="quarter_live"/>
                                 <field name="concours_ids" widget="many2many_tags"   required="1"/>
@@ -84,12 +87,10 @@
                             <group>
                                 <field name="father_work_id"   />
                                 <field name="mother_work_id" />
-                                <field name="parent_town_id"  required="1" />
-                                <field name="center_id"  required="1"/>
+                                <field name="parent_town_id"   />
+                                <field name="center_id"  required="1" options='{"no_open": True, "no_create": True}'/>
                                 <field name="phone_parents" />
                                 <field name="year_id" readonly="1"/>
-
-
                             </group>
                              </group>
 
@@ -105,13 +106,16 @@
                                         <field name="q3"  required="1" />
                                         <field name="q4"  required="1"/>
                                         <field name="q5"  />
+                                        <field name="structure"/>
+
                                     </group>
                                     <group>
                                         <field name="q6"   required="1"/>
                                         <field name="q7"  required="1"/>
                                         <field name="q8"  required="1"/>
                                         <field name="q9"  required="1"/>
-                                        <field name="q10"   />
+<!--                                        <field name="q10"   />-->
+                                        <field name="groupe_prepa" attrs="{'invisible': [('q9','=', False)]}"/>
                                     </group>
                                 </group>
                             </page>
@@ -119,18 +123,18 @@
                                 <group>
                                     <field name="dossier"  required="1"/>
                                     <field name="voyage"  required="1"/>
+<!--                                    <field name="user_id" readonly="1"/>-->
                                 </group>
 
                             </page>
 
                             <page string="ENGAGEMENTS PERSONNELS">
-
                                 <p>1) Je m’engage à être en salle de cours à 7h45 chaque matin et à y rester jusqu’à la fin des cours.</p>
-                                <p>  2- Je m’engage à traiter mes fiches de TD chaque jour avant le prochain cours </p>
-                                <p>3- Je m’engage à fournir tous les efforts nécessaires pour réussir au concours pour lequel je suis à Leader’s corporation </p>
-                                <p>4-Je m’engage à garder le silence pendant les cours</p>
-                                <p>5- Je m’engage à lire mes cours avant d’arriver au centre</p>
-                                <p>6- Je m’engage à faire des recherches personnelles pour optimiser mon rendement afin de parfaire ma préparation.  </p>
+                                <p>2)- Je m’engage à traiter mes fiches de TD chaque jour avant le prochain cours </p>
+                                <p>3)- Je m’engage à fournir tous les efforts nécessaires pour réussir au concours pour lequel je suis à Leader’s corporation </p>
+                                <p>4)-Je m’engage à garder le silence pendant les cours</p>
+                                <p>5)- Je m’engage à lire mes cours avant d’arriver au centre</p>
+                                <p>6)- Je m’engage à faire des recherches personnelles pour optimiser mon rendement afin de parfaire ma préparation.  </p>
                                 <p> <field name="digital_signature" widget="signature"  string="Signature de L'élève"  required="1"/> </p>
                             </page>
                         </notebook>
@@ -181,10 +185,29 @@
 
 
     <record id="view_leaders_apprenant_my_center_action" model="ir.actions.act_window">
-            <field name="name">Les apprennants de mon centre</field>
+            <field name="name">Les apprennants de mon Centre</field>
             <field name="res_model">leaders.apprenant</field>
             <field name="type">ir.actions.act_window</field>
-<!--            <field name="domain">[('state', '=', 'student')]</field>-->
+            <field name="domain">['|','|',('center_id.user_id','=', uid),
+                ('center_id.chef_id','=', uid),
+                ('center_id.regional_id','=', uid)]</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="view_id" ref="view_leaders_apprenant_tree"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                 Cr&#233;ez / &#233;ditez vos donn&#233;es sur les apprenants de mon centre
+              </p><p>
+                Cette interface vous permet d'enregistrer les informations des apprenants
+              </p>
+            </field>
+        </record>
+
+
+    <record id="view_apprenant_my_region_cse_action" model="ir.actions.act_window">
+            <field name="name">Les apprennants des regions(CENTRE/SUD/EST)</field>
+            <field name="res_model">leaders.apprenant</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="domain">[('center_id.region', 'in', ['ce','su','es'])]</field>
             <field name="view_mode">tree,form,graph</field>
             <field name="view_id" ref="view_leaders_apprenant_tree"/>
             <field name="help" type="html">
@@ -197,17 +220,38 @@
             </field>
         </record>
 
+    <record id="view_apprenant_my_region_lnwo_action" model="ir.actions.act_window">
+            <field name="name">Les Apprennants des regions(LT/SW/OU/NW)</field>
+            <field name="res_model">leaders.apprenant</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="domain">[('center_id.region', 'in', ['lt','sw','ou','nw'])]</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="view_id" ref="view_leaders_apprenant_tree"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                 Cr&#233;ez / &#233;ditez vos donn&#233;es sur les apprenants du centre de
+              </p><p>
+                Cette interface vous permet d'enregistrer les informations des apprenants
+              </p>
+            </field>
+        </record>
 
 
-
-
-
-
-
-
-
-
-
+    <record id="view_apprenant_my_region_gn_action" model="ir.actions.act_window">
+            <field name="name">Les apprennants des regions du GRAND NORD</field>
+            <field name="res_model">leaders.apprenant</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="domain">[('center_id.region', 'in', ['ad','no','en'])]</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="view_id" ref="view_leaders_apprenant_tree"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                 Cr&#233;ez / &#233;ditez vos donn&#233;es sur les apprenants du GRAND NORD
+              </p><p>
+                Cette interface vous permet d'enregistrer les informations du GRAND NORD
+              </p>
+            </field>
+    </record>
 
       <!--- LES CENTRES DE PREPARATIONS!-->
 
@@ -305,5 +349,23 @@
             </field>
         </record>
 
+
+
+
+<!--       <record model="ir.ui.view" id="view_leaders_app_inherit_users_simple_form">-->
+<!--            <field name="name">leaders_app.inherit.res.users.form</field>-->
+<!--            <field name="model">res.users</field>-->
+<!--            <field name="inherit_id" ref="base.view_users_form"/>-->
+<!--            <field name="arch" type="xml">-->
+
+<!--                <field name="email" position="after">-->
+<!--                    <field name="center_id"  placeholder="Centre de Prepas" />-->
+<!--                </field>-->
+<!--                <field name="center_id" position="after">-->
+<!--                    <field name="region"  placeholder="Region" />-->
+<!--                </field>-->
+
+<!--            </field>-->
+<!--        </record>-->
 
 </odoo>

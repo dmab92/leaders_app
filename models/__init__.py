@@ -9,4 +9,4 @@ from . import leaders_config
 from . import leaders_bilan_journalier
 from . import leaders_sms
 from . import leaders_presence_personel
-from . import res_users
+#from . import res_users

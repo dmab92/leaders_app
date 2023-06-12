@@ -11,19 +11,33 @@
 
 
     <record model="ir.module.category" id="module_leader_category">
-             <field name="name">LEADERS</field>
+             <field name="name">LES GROUPES D'UTILISATEURS DE LA PLATEFORME LEADERS CONNECT </field>
              <field name="description"> Acces des utilissateurs au module  de Leaders</field>
              <field name="sequence">20</field>
     </record>
 
 
     <record id="coordo_gene_group" model="res.groups">
-            <field name="name">Coordo Générale</field>
+            <field name="name">Coordination  Nationale</field>
             <field name="category_id" ref="module_leader_category"/>
     </record>
 
-    <record id="coordo_regio_group" model="res.groups">
-            <field name="name">Coordo Régionale</field>
+<!--    <record id="coordo_regio_group" model="res.groups">-->
+<!--            <field name="name">Coordination Régionale</field>-->
+<!--            <field name="category_id" ref="module_leader_category"/>-->
+<!--    </record>-->
+
+
+    <record id="coordo_regio_ces_group" model="res.groups">
+            <field name="name">Coordination Régionale CENTRE/SUD/EST</field>
+            <field name="category_id" ref="module_leader_category"/>
+    </record>
+    <record id="coordo_regio_lto_group" model="res.groups">
+            <field name="name">Coordination Régionale LITTORAL/OUEST/NW/SW</field>
+            <field name="category_id" ref="module_leader_category"/>
+    </record>
+    <record id="coordo_regio_no_group" model="res.groups">
+            <field name="name">Coordination Régionale GRAND NORD </field>
             <field name="category_id" ref="module_leader_category"/>
     </record>
 
@@ -57,6 +71,12 @@
 
     <record id="coordo_aca_group" model="res.groups">
             <field name="name">Coordination Academique</field>
+            <field name="category_id" ref="module_leader_category"/>
+    </record>
+
+
+     <record id="admin_config_group" model="res.groups">
+            <field name="name">Les Administrateurs de la plateforme</field>
             <field name="category_id" ref="module_leader_category"/>
     </record>
 

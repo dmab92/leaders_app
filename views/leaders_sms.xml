@@ -11,8 +11,8 @@
                 <tree string="Envoi dde SMS" >
 
                     <field name="name"/>
-                    <field name="sender_phone" />
                     <field name="message"/>
+                    <field name="date_register" />
 
                 </tree>
             </field>
@@ -33,9 +33,18 @@
                                       type="object"
                                       class="oe_highlight"
                                       icon="fa-check-circle"
+                                    attrs="{'invisible': [('state','not in',('draft'))]}"
                               />
 
-                    <field name="state" widget="statusbar" statusbar_visible="draft,valited,cancel" />
+                         <button name="import_customer"
+                                      string="Chager la liste des destinataires"
+                                      type="object"
+                                      class="oe_highlight"
+                                      icon="fa-check"
+                                      attrs="{'invisible': [('state','not in',('draft'))]}"
+                              />
+
+                    <field name="state" widget="statusbar" statusbar_visible="draft,valited" />
                     </header>
                     <sheet>
 
@@ -43,23 +52,30 @@
                         <div class="oe_title">
                              <group>
                                  <group>
-                                 <field name="name"/>
-                                <field name="sender_phone" />
+                                 <field name="name" required="1"/>
+                                
+                                     <field name="file" required="1"/>
 
                             </group>
                             <group>
-                                 <field name="message"/>
-                                <label for="contact_list_ids" string="Selectionner la liste de diffusion:" class="oe_edit_only"/>
-                                <div class="d-inline-flex flex-row align-items-center">
-                                    <field name="contact_list_ids" widget="many2many_tags" placeholder="Select mailing lists..." class="oe_inline mb-0" context="{'form_view_ref': 'mass_mailing.mailing_list_view_form_simplified'}" />
-                                            <button icon="fa-user-plus" type="object" class="btn btn-secondary py-0 px-1 ms-1" name="action_view_mailing_contacts" title="Add Mailing Contacts"/>
-                                </div>
-
-<!--                                <field name="contact_list_ids" widget="many2many_tags" />-->
+                                 <field name="message"  required="1"/>
+                                 <field name="date_register" />
                             </group>
+
+
                              </group>
                         </div>
                     </div>
+                        <notebook>
+                            <page string="Informations sur les destinaires">
+                                <field name="line_ids" nolabel="1" colspan="4" >
+                                    <tree string="Informations sur les destinaires" editable="1">
+                                        <field name="name" />
+                                        <field name="phone" />
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>
@@ -67,7 +83,7 @@
 
 
         <record id="view_leaders_conf_sms_action" model="ir.actions.act_window">
-            <field name="name">Les Concours</field>
+            <field name="name">Les SMS  DE LEADERS</field>
             <field name="res_model">leaders.sms</field>
             <field name="type">ir.actions.act_window</field>
             <field name="view_mode">tree,form,graph</field>
@@ -81,5 +97,6 @@
               </p>
             </field>
         </record>
+
 
 </odoo>

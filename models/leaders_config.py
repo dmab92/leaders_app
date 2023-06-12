@@ -7,17 +7,19 @@ from odoo import models, fields, api
 class leaders_concours(models.Model):
     _name = 'leaders.concour.config'
     _description = ' Les Configuration de Concours'
-    _order = 'id DESC'
+    _order = 'name ASC'
 
     name = fields.Char(string="Nom")
     nb_matier = fields.Char(string="Nombre de Matières", required=True)
     matiere_ids = fields.Many2many("leaders.matier", string="Matières presente du concours")
+    paiement_id = fields.Many2one('leaders.paiement')
 
 
 class leaders_center(models.Model):
     _name = 'leaders.center'
     _inherit = 'hr.department'
     _description = ' Les  centres de preparations'
+    _order = 'name ASC'
     #_order = 'id DESC'
 
     #name = fields.Char(string="Nom")
@@ -37,14 +39,19 @@ class leaders_center(models.Model):
                              string='REGION',
                              help="La region ou se situe le centre de prepaartion")
 
-    employee_ids = fields.One2many("leaders.employee",'center_id', string="Les Employés du Centre")
+    #employee_ids = fields.One2many("leaders.employee",'center_id', string="Les Employés du Centre")
+    employee_ids = fields.Many2many("leaders.employee",'center_id', string="Les Employés du Centre")
+    user_id = fields.Many2one('res.users', 'Agent Comptable')
+    chef_id = fields.Many2one('res.users', 'Chef de Centre')
+    regional_id = fields.Many2one('res.users', 'Coordonateur Regionale')
+
 
 
 
 class leaders_year(models.Model):
     _name = 'leaders.year'
     _description = ' Les  années scolaires'
-    _order = 'id DESC'
+    _order = 'id ASC'
 
     name = fields.Char("Nom", default=' ')
     date_start = fields.Date('Date de debut', required=True)
@@ -65,9 +72,10 @@ class leaders_year(models.Model):
 class leaders_school(models.Model):
         _name = 'leaders.school'
         _description = ' Les etablissements Scolaire'
+        _order = 'name ASC'
         #_order = 'id DESC'
 
-        name = fields.Char(string="Noms")
+        name = fields.Char(string="Nom")
         region = fields.Selection([('ad', 'ADAMAOUA'),
                                    ('ce', 'CENTRE'),
                                    ('en', 'EXTREME-NORD'),
@@ -87,6 +95,7 @@ class leaders_school(models.Model):
 class leaders_filiere(models.Model):
         _name = 'leaders.filiere'
         _description = ' Les Fileres des apprenants'
+        _order = 'name ASC'
         #_order = 'id DESC'
 
         name = fields.Char(string="Nom")
@@ -94,6 +103,7 @@ class leaders_filiere(models.Model):
 class leaders_work(models.Model):
         _name = 'leaders.work'
         _description = ' Les professions des parents'
+        _order = 'name ASC'
         #_order = 'id DESC'
 
         name = fields.Char(string="Nom")
@@ -101,6 +111,7 @@ class leaders_work(models.Model):
 class leaders_town(models.Model):
         _name = 'leaders.town'
         _description = ' Les villes des parents'
+        _order = 'name ASC'
         #_order = 'id DESC'
         name = fields.Char(string="Noms")
 
@@ -108,6 +119,7 @@ class leaders_town(models.Model):
 class leaders_speciality(models.Model):
     _name = 'leaders.speciality'
     _description = ' Les Specialite des parents'
+    _order = 'name ASC'
     # _order = 'id DESC'
     name = fields.Char(string="Noms")
 
@@ -115,13 +127,16 @@ class leaders_speciality(models.Model):
 class leaders_class(models.Model):
     _name = 'leaders.class'
     _description = ' Les Classe des  eleves'
+    _order = 'name ASC'
     # _order = 'id DESC'
+
     name = fields.Char(string="Nom")
 
 
 class leaders_matier(models.Model):
     _name = 'leaders.matier'
     _description = ' Les Matières enseignées'
-    _order = 'id DESC'
+    _order = 'name ASC'
+   # _order = 'id DESC'
 
     name = fields.Char(string="Nom",required=True)

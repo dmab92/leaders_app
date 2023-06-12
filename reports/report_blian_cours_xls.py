@@ -45,8 +45,8 @@ class ReportConcours(models.AbstractModel):
              u' BILAN  DES COURS PAR ENSEIGNANTS DE LA PERIODE ALLANT DU  No '+str(self.date_start) + 'AU',
              +str(self.date_end)],
             [' '],
-            [u'RANG', u'NOMS et PRENOMS DE L''ENSEIGNANT', u'NOMS ET PRENOMS DE L''ELEVE ', u'DERNIER ETABLISSEMENT FREQUENTE', u'MATIERE 1',
-             u'MATIERE 2', u'MATIERE 3', u'MATIERE 4',
+            [u'RANG', u'NOMS et PRENOMS DE L''ENSEIGNANT', u'NOMS ET PRENOMS DE L''ELEVE ', u'DERNIER ETABLISSEMENT FREQUENTE', u'EPREUVE 1',
+             u'EPREUVE 2', u'EPREUVE 3', u'EPREUVE 4',
              u'MOYENNE']
         ]
 

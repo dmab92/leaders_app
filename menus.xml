@@ -13,6 +13,8 @@
                   id="leaders_app.apprenants"
                   parent="leaders_app.menu_root"
                   sequence="1"
+
+
               />
 
         <menuitem name="Enregister un Apprenant"
@@ -27,11 +29,27 @@
                   action="leaders_app.view_leaders_apprenant_my_center_action"
                   sequence="2"
               />
-         <menuitem name="Les Apprenants de ma Region"
-                  id="leaders_app.my_apprenants_region"
+         <menuitem name="Les Apprenants de ma Region(Centre/SUD/EST)"
+                   id="leaders_app.my_apprenants_region_ces"
+                   parent="leaders_app.apprenants"
+                   action="leaders_app.view_apprenant_my_region_cse_action"
+                   sequence="3"
+                   groups="leaders_app.coordo_regio_ces_group"
+
+              />
+        <menuitem name="Les Apprenants de ma Region(LT/SW/OU/NW)"
+                  id="leaders_app.my_apprenant_region_los"
                   parent="leaders_app.apprenants"
-                  action="leaders_app.view_leaders_apprenant_my_center_action"
+                  action="leaders_app.view_apprenant_my_region_lnwo_action"
                   sequence="3"
+                  groups="leaders_app.coordo_regio_lto_group"
+              />
+        <menuitem name="Les Apprenants de ma Region(GRAND NORD)"
+                  id="leaders_app.my_apprenants_region_gn"
+                  parent="leaders_app.apprenants"
+                  action="leaders_app.view_apprenant_my_region_gn_action"
+                  sequence="3"
+                  groups="leaders_app.coordo_regio_no_group"
               />
 
         <menuitem name="Tous les Apprenants"
@@ -39,6 +57,8 @@
                   parent="leaders_app.apprenants"
                   action="leaders_app.view_leaders_apprenant_action"
                   sequence="4"
+                  groups="leaders_app.coordo_gene_group"
+
               />
         <menuitem name="Transferer un Apprenant"
                   id="leaders_app.transfert"
@@ -55,6 +75,7 @@
                   id="leaders_app.concours_blancs"
                   parent="leaders_app.menu_root"
                   sequence="2"
+                   groups="leaders_app.agent_comptable_group,leaders_app.chef_center_group"
               />
 
 
@@ -73,27 +94,44 @@
               />
 
 
-
-
-
         <menuitem name="Opérations Financières"
                   id="leaders_app.view_leaders_payment"
                   parent="leaders_app.menu_root"
                   sequence="3"
+                  groups="leaders_app.controler_group,leaders_app.agent_comptable_group,leaders_app.chef_center_group"
               />
 
                 <menuitem name="Enregister un paiement"
                           id="leaders_app.view_leaders_payment_save"
                           parent="leaders_app.view_leaders_payment"
-                          action="leaders_app.view_leaders_payment_action"
+                          action="leaders_app.view_payment_save_action"
                           sequence="1"
+                      />
+                 <menuitem name="Les paiments de mon centre"
+                           id="leaders_app.view_leaders_payment_center"
+                           parent="leaders_app.view_leaders_payment"
+                           action="leaders_app.view_payment_action_center"
+                           sequence="2"
+                           groups="leaders_app.agent_comptable_group"
 
                       />
-                <menuitem name=" Fiche de Bilan Financier"
+
+                <menuitem name=" Ma Fiche de Bilan Financier"
                           id="leaders_app.view_bilan_journalier"
                           parent="leaders_app.view_leaders_payment"
-                          action="leaders_app.view_bilan_journalier_action"
-                          sequence="2"/>
+                          action="leaders_app.view_bilan_journalier_action_my"
+                          sequence="2"
+                          groups="leaders_app.agent_comptable_group"
+                />
+
+                 <menuitem name=" Toutes les Fiches de Bilan Financier"
+                           id="leaders_app.view_bilan_journalier_all"
+                           parent="leaders_app.view_leaders_payment"
+                           action="leaders_app.view_bilan_journalier_all_action"
+                           sequence="3"
+                           groups="leaders_app.coordo_gene_group"
+
+                />
 
                 <menuitem name="ENTREES"
                               id="leaders_app.view_leaders_payment_history"
@@ -105,12 +143,14 @@
                           id="leaders_app.view_inscrip_payment_history"
                           parent="leaders_app.view_leaders_payment_history"
                           action="leaders_app.view_history_inscrip__action"
+                          groups="leaders_app.coordo_gene_group"
                           sequence="4"/>
 
                 <menuitem name="Paiements de la tranche 1"
                           id="leaders_app.view_tranch1_payment_history"
                           parent="leaders_app.view_leaders_payment_history"
                           action="leaders_app.view_leaders_histo_tranch1_action"
+                          groups="leaders_app.coordo_gene_group"
                           sequence="4"/>
 
                 <menuitem name="Paiements de la tranche 2"
@@ -131,6 +171,7 @@
                           parent="leaders_app.view_leaders_payment_history"
                           action="leaders_app.view_leaders_histo_payment_action"
                           sequence="7"
+                          groups="leaders_app.coordo_gene_group"
                       />
 
 
@@ -140,13 +181,28 @@
                               sequence="8"
                           />
 
-                <menuitem name="Bilan des Sorties"
+
+                <menuitem name="Toutes les sorties de mon centre"
+                          id="leaders_app.my_sorti_history"
+                          parent="leaders_app.view_sortie_bi_history"
+                          action="leaders_app.view_my_sorti_history_action"
+                          sequence="9"
+                />
+                <menuitem name=" Toutes les Sorties"
                           id="leaders_app.sorti_history"
                           parent="leaders_app.view_sortie_bi_history"
                           action="leaders_app.view_sorti_history_action"
-                          sequence="9"
+                          sequence="10"
+                          groups="leaders_app.coordo_gene_group"
                 />
 
+
+<!--                <menuitem name="Bilan des Sorties de mon centre"-->
+<!--                          id="leaders_app.sorti_history"-->
+<!--                          parent="leaders_app.view_sortie_bi_history"-->
+<!--                          action="leaders_app.view_sorti_history_action"-->
+<!--                          sequence="9"-->
+<!--                />-->
 
  <!-- GESTION DES OPERATIONS LOGISTIQUES -->
 
@@ -154,6 +210,7 @@
                   id="leaders_app.op_logistik"
                   parent="leaders_app.menu_root"
                   sequence="4"
+                  groups="leaders_app.coordo_logistik_group"
               />
 
             <menuitem name="Paiements Frais de dossier"
@@ -186,6 +243,7 @@
                       parent="leaders_app.menu_root"
                       action="leaders_app.view_bilan_cours_action"
                       sequence="5"
+                      groups="leaders_app.coordo_aca_group"
             />
 
         <menuitem name="Bilan des Cours des Enseignants"
@@ -193,6 +251,7 @@
                       parent="leaders_app.academie"
                       action="leaders_app.view_bilan_cours_action"
                       sequence="1"
+                      groups="leaders_app.coordo_aca_group"
                   />
 
  <!-- GESTION DU PERSONNEL -->
@@ -201,6 +260,7 @@
                   id="leaders_app.personnel"
                   parent="leaders_app.menu_root"
                   sequence="6"
+                  groups="leaders_app.coordo_aca_group"
               />
 
         <menuitem name="Enregistrer un personnel"
@@ -234,7 +294,8 @@
          <menuitem name="Configurations"
               id="leaders_app.config"
                    sequence="9"
-              parent="leaders_app.menu_root" />
+              parent="leaders_app.menu_root"
+         groups="leaders_app.admin_config_group"/>
 
         <menuitem name="Centres de Prépas"
               id="leaders_app.center"
@@ -278,23 +339,12 @@
               />
 
 
-
-
         <menuitem name="SMS Marketing"
                   id="leaders_app.leaders_sms"
                   parent="leaders_app.config"
                   action="leaders_app.view_leaders_conf_sms_action"
 
               />
-
-
-
-
-
-
-
-
-
 
 
 

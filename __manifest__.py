@@ -34,7 +34,7 @@
         'views/leaders_bilan_journalier.xml',
         'views/leaders_sms.xml',
         'views/leaders_presence_personel.xml',
-        'views/res_users.xml',
+        #'views/res_users.xml',
         'reports/report_recu.xml',
         'reports/reports_definition.xml',
 

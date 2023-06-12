@@ -2,8 +2,8 @@
 
 import time
 from datetime import datetime
-from odoo import models, fields, api
-
+from odoo import models, fields, api, SUPERUSER_ID, _
+from odoo.exceptions import UserError, Warning, ValidationError
 
 class leaders_apprenant(models.Model):
     _name = 'leaders.apprenant'
@@ -48,12 +48,13 @@ class leaders_apprenant(models.Model):
         return academic_year_id and academic_year_id.id or False
 
 
+    #partner_id = fields.Many2one('res.partner',string="Partenaire Associe")
+    #user_id = fields.Many2one('res.users', string='Structure',  ondelete='set null',default=lambda self: self.env.uid, readonly=True)
     name = fields.Char("Noms et Prenoms", required=True)
     date_register = fields.Date("Date d'enregistrement",default = datetime.today().date())
     matricule = fields.Char("Matricule",default = lambda self: self._get_next_reference())
-
     etablissment_id = fields.Many2one("leaders.school", string="Etablissement Frequenté")
-    #actuel_school_id= fields.Many2one("leaders.school", string=" Etablissement Actuel")
+
     is_student = fields.Boolean("Etes vous un etudiant ?", default=False)
     univ_id = fields.Many2one("leaders.school", string="Université")
     class_id = fields.Many2one("leaders.class", string="Classe/Niveau")
@@ -62,7 +63,8 @@ class leaders_apprenant(models.Model):
     whatsap_phone= fields.Char("Numéro Whatsapp")
     quarter_live = fields.Char("Quartier de residence")
     serie_terminal = fields.Char("Serie éffectué en Terminale ")
-    concours_ids = fields.Many2many("leaders.concour.config", string="CONCOURS SOLLICITES (Uniquement les concours pour lesquels il va payer)")
+    concours_ids = fields.Many2many("leaders.concour.config",
+                                    string="CONCOURS SOLLICITES (Uniquement les concours pour lesquels il va payer)")
     #serie_terminal_id = fields.Many2one("leaders.speciality", String="Serie éffectué en Terminale")
     father_work_id = fields.Many2one("leaders.work", string="Profession du Père")
     mother_work_id = fields.Many2one("leaders.work",string="Profession de la Mère")
@@ -86,20 +88,55 @@ class leaders_apprenant(models.Model):
     dossier = fields.Selection([('oui', 'OUI'), ('non', 'NON'), ], string='CONSTITUTION DES DOSSIERS')
     voyage = fields.Selection([('oui', 'OUI'), ('non', 'NON'), ], string='VOYAGE POUR L’ETRANGER')
     digital_signature = fields.Binary(string=" ", help="Signature de l'eleve")
+    statut = fields.Selection([('fr', 'Francophone'), ('en', 'Anglophone'), ], string='Vous etes ?')
 
-    region = fields.Selection([('ad', 'ADAMAOUA'),
+    region_school = fields.Selection([('ad', 'ADAMAOUA'),
                                ('ce', 'CENTRE'),
                                ('en', 'EXTREME-NORD'),
                                ('es', 'EST'),
                                ('lt', 'LITTORAL'),
                                ('no', 'NORD'),
-                               ('nd', 'NORD-OUEST'),
+                               ('nw', 'NORD-OUEST'),
                                ('ou', 'OUEST'),
                                ('su', 'SUD'),
-                               ('sd', 'SUD-OUEST'),
+                               ('sw', 'SUD-OUEST'),
                                ],
-                              string='REGION', related='center_id.region',
+                              string="REGION", related='etablissment_id.region', store=True,
                               help="La region ou se situe le centre de prepaartion")
+
+    structure = fields.Selection([('AEFAS', 'AEFAS'),
+                                      ('AEENS', 'AEENS'),
+                                      ('AEFSE', 'AEFSE'),
+                                      ('GRANDPROF', 'GRANDPROF'),
+                                      ('REPETITION', 'MON GROUPE DE REPETITION')
+                                      ],
+                                     string='Par quel structure ?')
+
+    groupe_prepa = fields.Selection ([('Intelligentsia', 'Intelligentsia'),
+                                      ('EPS', 'EPS'),
+                                      ('CEMPLEX', 'CEMPLEX'),
+                                      ('EDUCIA', 'EDUCIA'),
+                                      ('GENIUS', 'GENIUS'),
+                                      ('AUTRES', 'AUTRES')
+                                      ],
+                                     string='Si oui dans quel groupe ?')
+
+
+    @api.constrains('phone_apprenant')
+    def _check_phone_number(self):
+        for rec in self:
+            if rec.phone_apprenant and len(rec.phone_apprenant) != 9:
+                raise ValidationError(_("Le numero de Téléphone doit avoir 9 chiffres sans espaces"))
+        return True
+
+
+    @api.constrains('whatsap_phone')
+    def _check_phone_number(self):
+        for rec in self:
+            if rec.whatsap_phone and len(rec.whatsap_phone) != 9:
+                raise ValidationError(_("  Le numero  Whatsapp  doit avoir 9 chiffres  sans espaces"))
+
+        return True
 
 
 
@@ -114,9 +151,9 @@ class tranfert_apprenant(models.Model):
     _name = 'leaders.transfert'
     _description = "Les Transferts d'apprenant "
 
-    old_center_id = fields.Many2one("leaders.center", string="Centre de preparation Actuel", required=True)
+    old_center_id = fields.Many2one("leaders.center", string="Ancien Centre", required=True)
 
-    new_center_id = fields.Many2one("leaders.center", string="Nouveau centre de preparation", required=True)
+    new_center_id = fields.Many2one("leaders.center", string="Nouveau Centre", required=True)
 
     apprenant_id = fields.Many2one("leaders.apprenant", string="Apprenant", required=True)
     state = fields.Selection([('draft', 'Brouillon'),
@@ -142,6 +179,24 @@ class tranfert_apprenant(models.Model):
         return self.write({"state": 'draft'})
 
 
+# class res_users(models.Model):
+#     _inherit = "res.users"
+#     # _name = "res.users"
+#
+#     center_id = fields.Many2one("leaders.center", string="Centre de Prepas")
+#     region = fields.Selection([('ad', 'ADAMAOUA'),
+#                                ('ce', 'CENTRE'),
+#                                ('en', 'EXTREME-NORD'),
+#                                ('es', 'EST'),
+#                                ('lt', 'LITTORAL'),
+#                                ('no', 'NORD'),
+#                                ('nd', 'NORD-OUEST'),
+#                                ('ou', 'OUEST'),
+#                                ('su', 'SUD'),
+#                                ('sd', 'SUD-OUEST'),
+#                                ],
+#                               string='REGION', related='center_id.region',
+#                               help="La region ou se situe l'etablissement Scolaire")
 
 
 

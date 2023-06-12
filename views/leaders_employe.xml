@@ -20,7 +20,7 @@
             <field name="arch" type="xml">
                 <tree string="Liste des Employés " >
                     <field name="name" string="Noms et pr&#233;noms"/>
-                    <field name="center_id"  string="Centre de pr&#233;pas" />
+<!--                    <field name="center_id"  string="Centre de pr&#233;pas" />-->
                     <field name="univ_id" />
                     <field name="phone"/>
                     <field name="type" />
@@ -45,18 +45,21 @@
                         <div class="oe_title">
                              <group>
                                  <group>
-                                     <field name="name" string="Noms et Pr&#233;noms "/>
-                                     <field name="phone"   string="T&#233;l&#233;phone MOMO/OM" />
+                                     <field name="name" string="Noms et Pr&#233;noms " required="1" />
+                                     <field name="phone_empl"   string="T&#233;l&#233;phone MOMO/OM" required="1" />
+                                     <field name="name_affich" required="1" />
                                      <field name="work_email"  string="Email"  />
                                      <field name="univ_id"  string="Universit&#233; d'Origine"/>
-
-                            </group>
+                                 </group>
                             <group>
                                 <field name="type" />
-                                <field name="job_id"   attrs="{ 'invisible': [('type','!=', 'perma')]}"/>
-                                <field name="center_id"    />
+<!--                                attrs="{ 'invisible': [('type','!=', 'perma')]}"-->
+                                <field name="job_id"   string="Poste" />
+                                <field name="center_id"   required="1"  />
+                                <field name="post_travail"  attrs="{ 'required': [('type','!=', 'perma')]}"/>
                                 <field name="matiere_ids" widget="many2many_tags"  attrs="{ 'invisible': [('type','!=', 'teacher')]}"/>
                                 <field name="company_id"  invisible="1" />
+                                <field name="address_id" invisible="1" />
                             </group>
                              </group>
                         </div>

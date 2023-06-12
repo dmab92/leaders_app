@@ -8,24 +8,6 @@ from odoo.exceptions import Warning, ValidationError
 from odoo.tools.translate import _
 
 #
-# class res_users(models.Model):
-#     _inherit = "res.users"
-#     # _name = "res.users"
-#
-#     center_id = fields.Many2one("leaders.center", string="Centre de Prepas")
-#     region = fields.Selection([('ad', 'ADAMAOUA'),
-#                                ('ce', 'CENTRE'),
-#                                ('en', 'EXTREME-NORD'),
-#                                ('es', 'EST'),
-#                                ('lt', 'LITTORAL'),
-#                                ('no', 'NORD'),
-#                                ('nd', 'NORD-OUEST'),
-#                                ('ou', 'OUEST'),
-#                                ('su', 'SUD'),
-#                                ('sd', 'SUD-OUEST'),
-#                                ],
-#                               string='REGION',
-#                               help="La region ou se situe l'etablissement Scolaire")
 
 
 

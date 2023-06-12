@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-       <!---!!!BILAN JOURNALIER !! -->
+
+      <record id="view_bilan_journalier_filter" model="ir.ui.view">
+            <field name="name">leaders.bilan.journalier.filter</field>
+            <field name="model">leaders.bilan.journalier</field>
+            <field name="arch" type="xml">
+                <search string="Les Bilans Journaliers">
+                    <field name="center_id" />
+                    <field name="region"/>
+                    <field name="date"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Centre de prépas" name="groupby_center_id" domain="[]" context="{'group_by': 'center_id'}"/>
+                        <filter string="Region" name="groupby_region" domain="[]" context="{'group_by': 'region'}"/>
+                        <filter string="date" name="groupby_date" domain="[]" context="{'group_by': 'date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+    <!---!!!BILAN JOURNALIER !! -->
         <record model="ir.ui.view" id="view_bilan_journalier_tree">
             <field name="name">BILAN JOURNALIER</field>
             <field name="model">leaders.bilan.journalier</field>
@@ -28,8 +46,18 @@
                                       type="object"
                                       class="oe_highlight"
                                       icon="fa-check-circle"
+                                      attrs="{'invisible': [('state','not in',('draft'))]}"
                               />
-                        <field name="state" widget="statusbar" statusbar_visible="draft,valited,cancel" />
+
+                         <button name="set_to_draft"
+                                string="Remettre en Brouillon"
+                                type="object"
+                                class="oe_highlight"
+                                icon="fa-check-circle"
+                                attrs="{'invisible': [('state','not in',('valited'))]}"
+                                 groups="leaders_app.coordo_gene_group"
+                              />
+                        <field name="state" widget="statusbar" statusbar_visible="draft,valited" />
                     </header>
                     <sheet>
 
@@ -39,16 +67,16 @@
                                  <group>
 
                                      <field name="name"/>
-                                      <field name="center_id" />
+                                      <field name="center_id"  attrs="{'readonly': [('state','not in',('draft'))]}"  required="1" options='{"no_open": True, "no_create": True}'/>
 
                                  </group>
                                 <group>
-                                     <field name="region" />
+                                     <field name="region" required="1" attrs="{'readonly': [('state','not in',('draft'))]}" />
                                     <field name="year_id"/>
 
                                 </group>
                                  <group>
-                                    <field name="date"/>
+                                    <field name="date" required="1"/>
 
                                 </group>
                              </group>
@@ -57,13 +85,13 @@
                         <notebook>
                             <page string="SECTION A: ENSEIGNEMENT">
 
-                                    <field name="enseignement_ids"  >
+                                    <field name="enseignement_ids"  attrs="{'readonly': [('state','not in',('draft'))]}" >
                                     <tree nolabel="1" editable="top">
-                                        <field name="date"/>
-                                        <field name="center_id"/>
+                                        <field name="date" required="1"/>
+                                        <field name="center_id" options='{"no_open": True, "no_create": True}' required="1"/>
                                         <field name="salle"/>
                                         <field name="name" />
-                                        <field name="matier_id" />
+                                        <field name="matier_id" options='{"no_open": True, "no_create": True}'/>
                                         <field name="time_start" widget="float_time"/>
                                         <field name="time_end"   widget="float_time" />
                                         <field name="time_dif" />
@@ -86,9 +114,9 @@
 
                                 <group>
                                     <group>
-                                        <field name="total_frais_cour" />
-                                        <field name="total_livre" />
-                                        <field name="total_dossier" />
+                                        <field name="total_frais_cour"  required="1" attrs="{'readonly': [('state','not in',('draft'))]}" />
+                                        <field name="total_livre"  required="1" attrs="{'readonly': [('state','not in',('draft'))]}" />
+                                        <field name="total_dossier" required="1" attrs="{'readonly': [('state','not in',('draft'))]}" />
                                     </group>
                                 </group>
 
@@ -96,19 +124,19 @@
 
                             <page string="SECTION B: FINANCES/SORTIES">
 
-                                    <field name="sortie_ids" nolabel="1"  >
+                                    <field name="sortie_ids" nolabel="1"  attrs="{'readonly': [('state','not in',('draft'))]}">
                                         <tree string="SORTIES"  editable="top">
-                                            <field name="date_register"/>
-                                            <field name="center_id"/>
-                                            <field name="motif" />
+                                            <field name="date_register" required="1"/>
+                                            <field name="center_id" options='{"no_open": True, "no_create": True}' required="1"/>
+                                            <field name="motif" required="1"/>
                                             <field name="amount" sum="Montant Total des Sorties"/>
-                                            <field name="employee_id"  require="True"/>
+                                            <field name="employee_id"  required="1"/>
                                         </tree>
                                     </field>
                                 <group>
-                                     <field name="total_sorti" />
-                                    <field name="solde"/>
-                                    <field name="solde_in_letter"/>
+                                     <field name="total_sorti" required="1"  attrs="{'readonly': [('state','not in',('draft'))]}"/>
+                                    <field name="solde" required="1" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+                                    <field name="solde_in_letter" attrs="{'readonly': [('state','not in',('draft'))]}" required="1"/>
 
                                 </group>
 
@@ -117,24 +145,23 @@
 
                             <page string="FINANCES/RECAPITULATIF GENERAL">
                                     <group>
-                                        <field name="amount_verse"/>
-                                        <field name="photo"/>
+                                        <field name="amount_verse" required="1" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+                                        <field name="photo" attrs="{'readonly': [('state','not in',('draft'))]}"/>
                                     </group>
                                     <group>
-                                        <field name="employee_momo_id" require="1"/>
-                                        <field name="amount_momo" require="1"/>
-                                        <field name="amount_phy" require="1"/>
-                                        <field name="employee_phy_id" require="1"/>
-                                        <field name="amount_dossier" require="1"/>
+                                        <field name="employee_momo_id" options='{"no_open": True, "no_create": True}' require="1"/>
+                                        <field name="amount_momo" attrs="{'readonly': [('state','not in',('draft'))]}" require="1"/>
+                                        <field name="amount_phy" attrs="{'readonly': [('state','not in',('draft'))]}" />
+                                        <field name="employee_phy_id"  options='{"no_open": True, "no_create": True}'/>
+                                        <field name="amount_dossier" require="1" attrs="{'readonly': [('state','not in',('draft'))]}"/>
                                     </group>
 
                                     <group>
-                                        <field name="signature_ac"  widget="signature"/>
-                                        <field name="signature_cf" widget="signature"/>
+                                        <field name="signature_ac"  widget="signature" attrs="{'readonly': [('state','not in',('draft'))]}"/>
+                                        <field name="signature_cf" widget="signature" attrs="{'readonly': [('state','not in',('draft'))]}"/>
                                         <field name="bool"/>
                                     </group>
                             </page>
-
 
                         </notebook>
                     </sheet>
@@ -143,7 +170,27 @@
         </record>
 
 
-        <record id="view_bilan_journalier_action" model="ir.actions.act_window">
+
+        <record id="view_bilan_journalier_action_my" model="ir.actions.act_window">
+            <field name="name">Les Bilans Journaliers</field>
+            <field name="res_model">leaders.bilan.journalier</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="domain">['|','|',('center_id.user_id','=', uid),
+                ('center_id.chef_id','=', uid),
+                ('center_id.regional_id','=', uid)]</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="view_id" ref="view_bilan_journalier_tree"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                 Cr&#233;ez / &#233;ditez vos donn&#233;es sur les Bilans Journaliers
+              </p><p>
+                  Cette interface vous permet d'enregistrer les Bilans Journaliers
+                </p>
+            </field>
+        </record>
+
+
+    <record id="view_bilan_journalier_all_action" model="ir.actions.act_window">
             <field name="name">Les Bilans Journaliers</field>
             <field name="res_model">leaders.bilan.journalier</field>
             <field name="type">ir.actions.act_window</field>
@@ -163,6 +210,27 @@
 
     <!---!! HISTORIQUE DES COURS !!-->
 
+
+
+    <record id="view_leaders_enseignement_filter" model="ir.ui.view">
+            <field name="name">leaders.enseignement.filter</field>
+            <field name="model">leaders.enseignement</field>
+            <field name="arch" type="xml">
+                <search string="Les Bilans des cours">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="matier_id"/>
+                    <field name="center_id" />
+                    <group expand="0" string="Group By">
+                        <filter string="Nom de l'enseignant" name="groupby_name" domain="[]" context="{'group_by': 'name'}"/>
+                        <filter string="Date du Cours" name="groupby_date" domain="[]" context="{'group_by': 'date'}"/>
+                        <filter string="matier_id" name="groupby_matier_id" domain="[]" context="{'group_by': 'matier_id'}"/>
+                        <filter string="Centre de prépas" name="groupby_center_id" domain="[]" context="{'group_by': 'center_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
         <record model="ir.ui.view" id="view_enseig_history_form">
             <field name="name"> Recapitualitif  des enseignements</field>
             <field name="model">leaders.enseignement</field>
@@ -180,18 +248,19 @@
                         <div class="oe_title">
                              <group>
                                  <group>
+                                     <field name="name" />
                                     <field name="date"/>
                                         <field name="salle"/>
-                                        <field name="name" />
+
                                         <field name="matier_id"  readonly="1"/>
                                         <field name="time_start" widget="float_time" readonly="1"/>
-                                        <field name="time_end"   widget="float_time" readonly="1"/>
+                                        <field name="time_end"   widget="float_time" readonly="1" />
                                     </group>
                                     <group>
                                                <field name="time_dif"  readonly="1"/>
-                                                <field name="contenu"  />
-                                                <field name="observation"/>
-                                                <field name="blouse" />
+                                                <field name="contenu"  required="1"/>
+                                                <field name="observation" required="1"/>
+                                                <field name="blouse" required="1" />
                                                 <field name="state"/>
                                     </group>
                              </group>
@@ -206,7 +275,7 @@
                 <field name="name">BILAN DES ENSEIGNEMENTS</field>
                 <field name="model">leaders.enseignement</field>
                 <field name="arch" type="xml">
-                    <tree string="BILAN DES ENSEIGNEMENTS" create="false" delete="false">
+                    <tree string="BILAN DES ENSEIGNEMENTS" create="false" >
                         <field name="date"/>
                         <field name="center_id"/>
                         <field name="salle"/>
@@ -305,6 +374,24 @@
             <field name="name">Les Bilans des SORTIES</field>
             <field name="res_model">leaders.sortie</field>
             <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="view_id" ref="view_sorti_history_tree"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                 Cr&#233;ez / &#233;ditez vos donn&#233;es sur les BILANS DES SORTIES
+              </p><p>
+                  Cette interface vous permet d'enregistrer les BILANS DES SORTIES
+                </p>
+            </field>
+        </record>
+
+     <record id="view_my_sorti_history_action" model="ir.actions.act_window">
+            <field name="name">Les Bilans des SORTIES</field>
+            <field name="res_model">leaders.sortie</field>
+            <field name="type">ir.actions.act_window</field>
+         <field name="domain">['|','|',('center_id.user_id','=', uid),
+                ('center_id.chef_id','=', uid),
+                ('center_id.regional_id','=', uid)]</field>
             <field name="view_mode">tree,form,graph</field>
             <field name="view_id" ref="view_sorti_history_tree"/>
             <field name="help" type="html">

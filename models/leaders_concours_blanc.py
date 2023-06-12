@@ -18,7 +18,9 @@ class leaders_concours_blanc(models.Model):
     name = fields.Char("Nom",compute='_get_name',store=True)
     date_concours = fields.Date("Date du concours", required=True)
     concour_id = fields.Many2one("leaders.concour.config", string="Concours", required=True)
+    nb_matier = fields.Char(string="Nombre de d'Epreuves", related='concour_id.nb_matier')
     matiere_ids = fields.Many2many("leaders.matier", string="Matières")
+
     number = fields.Selection([('1', '1'),
                                ('2', '2'),
                                ('3', '3'),
@@ -27,7 +29,7 @@ class leaders_concours_blanc(models.Model):
                                ('6', '6'),
                                ('7', '7'),
                                ('or', 'D''Or'),
-                               ], string="Numero du concours Blanc")
+                               ], require=True, string="Numero du concours Blanc")
     state = fields.Selection([('draft', 'Brouillon'),
                                ('valited', 'Validé'),
                                ('cancel', 'Annuler')
@@ -54,7 +56,11 @@ class leaders_concours_blanc(models.Model):
     @api.depends('concour_id','date_concours','number')
     def _get_name(self):
         for record in self:
-            record.name = 'Concours Blanc No ' + str(record.number) + ' de ' + str(record.concour_id.name) + ' du ' + str(record.date_concours)
+            record.name = 'Concours Blanc No ' + str(record.number) + ' de ' + str(record.concour_id.name) + ' du Centre  '+str(record.center_id.name)
+
+            #record.name = 'Concours Blanc No ' + str(record.number) + ' de ' + str(record.concour_id.name) + ' du ' + str(record.date_concours)
+            #record.name = 'Concours BLanc No ' + str(record.number) + ' De '+str(record.concour_id.name) +' le ' + fields.Date.from_string(
+                #record.date_concours).strftime('%d/%m/%Y')
     def set_to_validated(self):
         for record in self:
             for line in record.lignes_ids:
@@ -128,10 +134,10 @@ class leaders_concours_blanc_line(models.Model):
         return academic_year_id and academic_year_id.id or False
     name = fields.Char("Nom")
     apprenant_id = fields.Many2one("leaders.apprenant", string="Apprenant")
-    note_mat1 = fields.Float("Epreuve 1 ")
-    note_mat2 = fields.Float("Epreuve 2 ")
-    note_mat3 = fields.Float("Epreuve 3 ")
-    note_mat4 = fields.Float("Epreuve 4 ")
+    note_mat1 = fields.Float("Note Epreuve 1 ")
+    note_mat2 = fields.Float("Note Epreuve 2 ")
+    note_mat3 = fields.Float("Note Epreuve 3 ")
+    note_mat4 = fields.Float("Note Epreuve 4 ")
     average = fields.Float("Moyenne",  readonly=1)
     concour_blanc_id = fields.Many2one("leaders.concour.blanc", string="Concour Blanc")
     concour_id = fields.Many2one("leaders.concour.config", string="Concours")

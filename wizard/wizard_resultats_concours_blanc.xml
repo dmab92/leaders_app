@@ -9,13 +9,11 @@
             <form string="Resultats Concours Blancs">
                 <group>
                     <group>
-
-
-                        <field name="concour_id"  required="1" />
+                        <field name="concour_id"  required="1"  options='{"no_open": True, "no_create": True}'/>
                         <field name="number" required="1" />
                     </group>
                     <group>
-                        <field name="year_id" />
+                        <field name="year_id"  options='{"no_open": True, "no_create": True}'/>
                         <field name="center_ids"  widget="many2many_tags" invisible="1"/>
                         <field name='file_data' filename="file_name" attrs="{'invisible' : [('bool', '=', False)]}"/>
                         <field name='bool' invisible="1" />

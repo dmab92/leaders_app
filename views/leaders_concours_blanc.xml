@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+     <record id="view_leaders_concours_blanc_filter" model="ir.ui.view">
+            <field name="name">leaders.concour.blanc.filter</field>
+            <field name="model">leaders.concour.blanc</field>
+            <field name="arch" type="xml">
+                <search string="Les Concours Blancs">
+                    <field name="concour_id"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Concours" name="groupby_concour_id" domain="[]" context="{'group_by': 'concour_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
 
 
     <!--CONCOURS BLANCS!-->
@@ -50,11 +63,19 @@
                                       attrs="{'invisible': [('state','not in',('draft'))]}"
                                       icon="fa-check-circle"
                         />
+                         <button name="set_to_draft"
+                                      string="Remettre en Brouillon"
+                                      type="object"
+                                      attrs="{'invisible': [('state','not in',('cancel'))]}"
+                                      icon="fa-check-circle"
+                        />
+
                         <button name="set_to_delete"
                                 string="Annuler"
                                 type="object"
                                 attrs="{'invisible': [('state','not in',('valited'))]}"
                                 icon="fa-cancel"
+                                groups="leaders_app.animateur_pedago_group,leaders_app.chef_center_group,leaders_app.coordo_gene_group,leaders_app.coordo_regio_group"
                         />
 
                         <field name="state" widget="statusbar" statusbar_visible="draft,valited,cancel" />
@@ -68,14 +89,15 @@
                              <group>
                                  <group>
                                      <field name="name" readonly="1"/>
-                                     <field name="year_id"   />
-                                     <field name="center_id"/>
+                                     <field name="center_id" required="1" options='{"no_open": True, "no_create": True}'/>
                                      <field name="region" />
                                  </group>
                                  <group>
-                                    <field name="concour_id" />
+                                    <field name="concour_id"  required="1" options='{"no_open": True, "no_create": True}'/>
+                                     <field name="nb_matier" required="1"/>
                                      <field name="number"  string="Numero"  />
-                                    <field name="date_concours"/>
+                                    <field name="date_concours" required="1"/>
+                                     <field name="year_id"   />
                                  </group>
                              </group>
                         </div>
@@ -83,8 +105,8 @@
 
                         <notebook colspan="4">
                             <page string="Les apprenants">
-                                <field name="lignes_ids" nolabel="1" colspan="4">
-                                    <tree string="Apprenants" editable="top">
+                                <field name="lignes_ids" nolabel="1" colspan="4" attrs="{'readonly': [('state','in',('valited'))]}">
+                                    <tree string="Apprenants" editable="top" >
                                         <field name="apprenant_id"  required="1" />
                                         <field name="note_mat1"  avg="Note Moyenne" />
                                         <field name="note_mat2"  avg="Note Moyenne" />
@@ -138,13 +160,12 @@
                         <div class="oe_title">
                              <group>
                                  <group>
-                                     <field name="apprenant_id"/>
-                                    <field name="concour_id"   />
+                                     <field name="apprenant_id" options='{"no_open": True, "no_create": True}'/>
+                                    <field name="concour_id"  options='{"no_open": True, "no_create": True}'  />
                                     <field name="number"   />
                                     <field name="year_id"   />
-                                    <field name="center_id" />
+                                    <field name="center_id"  options='{"no_open": True, "no_create": True}'/>
                                     <field name="etablissment_id"/>
-
                             </group>
                             <group>
                                   <field name="average"/>
